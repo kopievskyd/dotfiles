@@ -1,0 +1,10 @@
+[init]
+	defaultBranch = main
+[user]
+	name = Dmitry Kopievsky
+	email = 193384474+kpvskd@users.noreply.github.com
+    signingkey = E286CF6B0412E373
+[commit]
+	gpgsign = true
+[tag]
+    gpgSign = true
