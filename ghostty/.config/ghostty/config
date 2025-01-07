@@ -1,0 +1,44 @@
+# font
+font-family = "JetBrainsMono Nerd Font"
+font-style = "Medium"
+font-style-italic = "Medium Italic"
+font-feature = -calt
+font-size = 14
+
+# window
+title = " "
+window-padding-x = 13
+window-padding-y = 0,2
+window-padding-balance = true
+window-save-state = always
+background-opacity = 0.98
+
+# shell
+cursor-style-blink = false
+shell-integration-features = no-cursor
+
+# macos
+macos-titlebar-style = tabs
+macos-titlebar-proxy-icon = hidden
+
+# theme
+palette = 0=#080616
+palette = 1=#b87770
+palette = 2=#9eb974
+palette = 3=#bba474
+palette = 4=#839bd3
+palette = 5=#917fb4
+palette = 6=#739389
+palette = 7=#c6c097
+palette = 8=#717169
+palette = 9=#d46f78
+palette = 10=#9eb974
+palette = 11=#e0c48c
+palette = 12=#8ab2c7
+palette = 13=#918aa6
+palette = 14=#83a69f
+palette = 15=#dbd7bc
+background = #1c2023
+foreground = #c7c7c7
+selection-background = #2d4f67
+selection-foreground = #c7c7c7
