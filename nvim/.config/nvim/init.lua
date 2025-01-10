@@ -17,21 +17,8 @@ vim.opt.laststatus = 3
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.swapfile = false
 vim.opt.laststatus = 3
-vim.g.netrw_keepdir = 0
 vim.g.netrw_banner = 0
-vim.g.netrw_sort_sequence = [[[\/]$,*]]
-vim.g.netrw_sizestyle = "H"
-vim.g.netrw_liststyle = 3
-
--- Keymaps
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-vim.keymap.set("n", "j", [[v:count?'j':'gj']], { noremap = true, expr = true })
-vim.keymap.set("n", "k", [[v:count?'k':'gk']], { noremap = true, expr = true })
-vim.keymap.set("n", "<leader>h", ":nohl<CR>", { desc = "Clear search highlights" })
-vim.keymap.set("n", "<leader>e", ":Explore<CR>", { desc = "Open explorer" })
-vim.keymap.set("n", "bn", ":bnext<CR>", { desc = "Next buffer" })
-vim.keymap.set("n", "bd", ":bdelete<CR>", { desc = "Delete buffer" })
+vim.opt.shortmess:append("I")
 
 -- Autocommands
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -39,6 +26,33 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
+
+local function toggle_netrw()
+	local netrw_open = false
+
+	for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+		local buf = vim.api.nvim_win_get_buf(win)
+		if vim.bo[buf].filetype == "netrw" then
+			netrw_open = true
+			break
+		end
+	end
+
+	if netrw_open then
+		vim.cmd("buffer")
+	else
+		vim.cmd("Explore")
+	end
+end
+
+-- Keymaps
+vim.g.mapleader = " "
+vim.keymap.set("n", "j", [[v:count?'j':'gj']], { noremap = true, expr = true })
+vim.keymap.set("n", "k", [[v:count?'k':'gk']], { noremap = true, expr = true })
+vim.keymap.set("n", "<leader>h", ":nohl<CR>", { desc = "Clear search highlights" })
+vim.keymap.set("n", "<leader>e", toggle_netrw, { desc = "Toggle explorer" })
+vim.keymap.set("n", "bn", ":bnext<CR>", { desc = "Next buffer" })
+vim.keymap.set("n", "bd", ":bdelete<CR>", { desc = "Delete buffer" })
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
