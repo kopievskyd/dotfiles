@@ -51,8 +51,8 @@ vim.keymap.set("n", "j", [[v:count?'j':'gj']], { noremap = true, expr = true })
 vim.keymap.set("n", "k", [[v:count?'k':'gk']], { noremap = true, expr = true })
 vim.keymap.set("n", "<leader>h", ":nohl<CR>", { desc = "Clear search highlights" })
 vim.keymap.set("n", "<leader>e", toggle_netrw, { desc = "Toggle explorer" })
-vim.keymap.set("n", "bn", ":bnext<CR>", { desc = "Next buffer" })
-vim.keymap.set("n", "bd", ":bdelete<CR>", { desc = "Delete buffer" })
+vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer" })
+vim.keymap.set("n", "<leader>bd", ":bdelete<CR>", { desc = "Delete buffer" })
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -118,7 +118,7 @@ require("lazy").setup({
 							CursorLineNr = { fg = palette.dragonBlack6 },
 							MatchParen = { fg = "none", bold = false },
 							ModeMsg = { fg = palette.dragonBlue2, bold = false },
-							StatusLine = { bg = palette.dragonBlack3 },
+							FloatBorder = { bg = theme.ui.bg_p1 },
 							Boolean = { bold = false },
 							Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 },
 							PmenuSel = { fg = "none", bg = theme.ui.bg_p2 },
@@ -141,12 +141,11 @@ require("lazy").setup({
 			config = function()
 				require("staline").setup({
 					sections = {
-						left = { "file_name", " ", "branch", " ", "lsp" },
+						left = { "file_name", "branch", "lsp" },
 						mid = {},
 						right = { "line_column" },
 					},
 					defaults = {
-						bg = "#212427",
 						true_colors = true,
 						line_column = "[%l/%L] :%c",
 						branch_symbol = " ",
@@ -236,7 +235,7 @@ require("lazy").setup({
 			version = "*",
 			opts = {
 				keymap = {
-					preset = "super-tab",
+					preset = "enter",
 					["<C-k>"] = { "select_prev", "fallback" },
 					["<C-j>"] = { "select_next", "fallback" },
 				},
