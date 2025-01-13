@@ -1,17 +1,13 @@
 # font
 font-family = "JetBrainsMono Nerd Font"
-font-style = "Medium"
-font-style-italic = "Medium Italic"
 font-feature = -calt
-font-size = 14
+font-size = 15
 
 # window
 title = " "
 window-padding-x = 13
-window-padding-y = 0,2
 window-padding-balance = true
 window-save-state = always
-background-opacity = 0.98
 
 # shell
 cursor-style-blink = false
@@ -38,7 +34,7 @@ palette = 12=#8ab2c7
 palette = 13=#918aa6
 palette = 14=#83a69f
 palette = 15=#dbd7bc
-background = #1c2023
+background = #191c1f
 foreground = #c7c7c7
 selection-background = #2d4f67
 selection-foreground = #c7c7c7
