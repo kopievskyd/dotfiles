@@ -8,6 +8,7 @@ title = " "
 window-padding-x = 13
 window-padding-balance = true
 window-save-state = always
+unfocused-split-opacity = 1
 
 # shell
 cursor-style-blink = false
