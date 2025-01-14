@@ -36,7 +36,7 @@ palette = 12=#8ab2c7
 palette = 13=#918aa6
 palette = 14=#83a69f
 palette = 15=#dbd7bc
-background = #1c2023
+background = #141617
 foreground = #c7c7c7
 selection-background = #2d4f67
 selection-foreground = #c7c7c7
