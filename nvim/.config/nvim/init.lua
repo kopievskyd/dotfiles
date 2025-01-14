@@ -114,7 +114,7 @@ require("lazy").setup({
 						end
 						return {
 							LineNr = { fg = palette.dragonBlack4 },
-							CursorLine = { bg = palette.dragonBlack3 },
+							CursorLine = { bg = palette.dragonBlack2 },
 							CursorLineNr = { fg = palette.dragonBlack6 },
 							MatchParen = { fg = "none", bold = false },
 							ModeMsg = { fg = palette.dragonBlue2, bold = false },
@@ -158,8 +158,8 @@ require("lazy").setup({
 						lualine_b = { { "filename", symbols = { modified = "󰏫" } } },
 						lualine_c = { "diagnostics" },
 						lualine_x = {},
-						lualine_y = { "progress" },
-						lualine_z = { "location" },
+						lualine_y = { "location" },
+						lualine_z = { "progress" },
 					},
 				})
 			end,
