@@ -137,18 +137,27 @@ require("lazy").setup({
 
 		-- Statusline
 		{
-			"tamton-aquib/staline.nvim",
+			"nvim-lualine/lualine.nvim",
 			config = function()
-				require("staline").setup({
-					sections = {
-						left = { "file_name", "branch", "lsp" },
-						mid = {},
-						right = { "line_column" },
+				local colors = { bg = "#212427", fg = "#90a3af" }
+				require("lualine").setup({
+					options = {
+						theme = {
+							normal = {
+								a = { fg = colors.fg, bg = colors.bg },
+								b = { fg = colors.fg, bg = colors.bg },
+								c = { fg = colors.fg, bg = colors.bg },
+							},
+						},
+						globalstatus = true,
 					},
-					defaults = {
-						true_colors = true,
-						line_column = "[%l/%L] :%c",
-						branch_symbol = " ",
+					sections = {
+						lualine_a = { { "branch", icon = "" } },
+						lualine_b = { { "filename", symbols = { modified = "󰏫" } } },
+						lualine_c = { "diagnostics" },
+						lualine_x = {},
+						lualine_y = { "progress" },
+						lualine_z = { "location" },
 					},
 				})
 			end,
