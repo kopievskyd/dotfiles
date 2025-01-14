@@ -86,19 +86,19 @@ require("lazy").setup({
 						palette = {
 							oldWhite = "#c6c9ca",
 							fujiWhite = "#d4d6d8",
-							dragonBlack0 = "#111315",
-							dragonBlack1 = "#16191b",
-							dragonBlack2 = "#1d2124",
-							dragonBlack3 = "#202427",
-							dragonBlack4 = "#2d3237",
-							dragonBlack5 = "#343a40",
-							dragonBlack6 = "#414950",
-							dragonYellow = "#8a9aa3",
+							dragonBlack0 = "#0f1011",
+							dragonBlack1 = "#16191a",
+							dragonBlack2 = "#1e2122",
+							dragonBlack3 = "#222527",
+							dragonBlack4 = "#2d3234",
+							dragonBlack5 = "#353a3d",
+							dragonBlack6 = "#40464a",
+							dragonYellow = "#a99c8b",
 						},
 						theme = {
 							dragon = {
 								ui = {
-									float = { bg = "#2d3237" },
+									float = { bg = "#222527" },
 									bg_gutter = "none",
 								},
 								syn = { comment = "#555a5d" },
@@ -139,7 +139,7 @@ require("lazy").setup({
 		{
 			"nvim-lualine/lualine.nvim",
 			config = function()
-				local colors = { bg = "#212427", fg = "#90a3af" }
+				local colors = { bg = "#1e2122", fg = "#969c9f" }
 				require("lualine").setup({
 					options = {
 						theme = {
@@ -149,10 +149,12 @@ require("lazy").setup({
 								c = { fg = colors.fg, bg = colors.bg },
 							},
 						},
+						component_separators = {},
+						section_separators = {},
 						globalstatus = true,
 					},
 					sections = {
-						lualine_a = { { "branch", icon = "" } },
+						lualine_a = { { "branch", icon = "" } },
 						lualine_b = { { "filename", symbols = { modified = "󰏫" } } },
 						lualine_c = { "diagnostics" },
 						lualine_x = {},
