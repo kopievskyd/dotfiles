@@ -154,8 +154,8 @@ require("lazy").setup({
 						globalstatus = true,
 					},
 					sections = {
-						lualine_a = { { "branch", icon = "" } },
-						lualine_b = { { "filename", symbols = { modified = "󰏫" } } },
+						lualine_a = { "branch" },
+						lualine_b = { "filename" },
 						lualine_c = { "diagnostics" },
 						lualine_x = {},
 						lualine_y = { "location" },
