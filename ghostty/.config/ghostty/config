@@ -10,6 +10,7 @@ window-padding-x = 13
 window-padding-balance = true
 window-save-state = always
 unfocused-split-opacity = 1
+window-colorspace = display-p3
 
 # shell
 cursor-style-blink = false
@@ -36,7 +37,7 @@ palette = 12=#8ab2c7
 palette = 13=#918aa6
 palette = 14=#83a69f
 palette = 15=#dbd7bc
-background = #141617
+background = #1a1d1e
 foreground = #c7c7c7
 selection-background = #2d4f67
 selection-foreground = #c7c7c7
