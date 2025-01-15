@@ -46,7 +46,6 @@ bindkey '^[[B' history-search-forward
 # Aliases
 alias ls='ls -lAh --color'
 alias mkdir='mkdir -p'
-alias vim='nvim'
 alias tree='tree -C -a'
 alias stow='stow --no-folding -Rt ~'
 
