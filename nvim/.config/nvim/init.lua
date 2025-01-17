@@ -39,7 +39,12 @@ local function toggle_netrw()
 	end
 
 	if netrw_open then
-		vim.cmd("buffer")
+		local buffers = vim.fn.getbufinfo({ buflisted = 1 })
+		if #buffers > 0 then
+			vim.cmd("buffer")
+		else
+			vim.cmd("bdelete")
+		end
 	else
 		vim.cmd("Explore")
 	end
