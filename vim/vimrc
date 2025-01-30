@@ -1,0 +1,17 @@
+syntax on
+set number
+set relativenumber
+set mouse=a
+set tabstop=4
+set shiftwidth=4
+set noexpandtab
+set smartindent
+set ignorecase
+set smartcase
+set hlsearch
+set noswapfile
+set viminfo=""
+set clipboard=unnamed
+let g:netrw_banner=0
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
