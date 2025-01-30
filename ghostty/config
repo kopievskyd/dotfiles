@@ -1,0 +1,6 @@
+theme = light:zenwritten_light,dark:zenwritten_dark
+font-family = JetBrains Mono
+font-feature = -calt
+font-size = 14
+window-padding-x = 10
+unfocused-split-opacity = 1
