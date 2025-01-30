@@ -1,32 +1,11 @@
-# Dot
-This repository contains my personal dotfiles for configuring various tools and applications on my system.
-
-## Requirements
-Ensure you have the following tools installed on your system:
-
-### Git
-```
-brew install git
-```
-
-### Stow
-```
-brew install stow
-```
-
 ## Installation
+
 Clone the repository:
 ```
-git clone https://github.com/kpvskd/dot.git ~/Developer
+mkdir -p ~/Developer && git clone git@github.com:kpvskd/dot.git ~/Developer/dot
 ```
 
-Use GNU Stow to create symlinks for the dotfiles:
+Run the setup script:
 ```
-stow --no-folding -Rt ~ */
+cd ~/Developer/dot && sh setup.sh
 ```
-
-## Usage
-After setting up the dotfiles, you may need to restart your terminal or reload configurations for the changes to take effect.
-
-## License
-This project is licensed under the MIT License — see the [LICENSE](https://github.com/kpvskd/dot/blob/main/LICENSE) file for details.
