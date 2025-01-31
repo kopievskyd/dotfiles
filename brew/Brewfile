@@ -9,19 +9,20 @@ brew "gnupg"
 brew "pinentry-mac"
 
 # Casks
+cask "rectangle"
 cask "syncthing"
 cask "pika"
 cask "pearcleaner"
-cask "itsycal"
 cask "domzilla-caffeine"
+cask "itsycal"
 cask "the-unarchiver"
 cask "vlc"
 cask "keepassxc"
 cask "telegram"
 cask "brave-browser"
-cask "obsidian"
 cask "visual-studio-code"
-cask "ghostty@tip"
+cask "obsidian"
+cask "ghostty"
 
 # VSCode extension
 vscode "z4yross.anysphere-dark"
