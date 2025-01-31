@@ -1,8 +1,12 @@
 {
   // Appearance
-  "workbench.colorTheme": "GitHub Dark Dimmed",
+  "workbench.colorTheme": "Anysphere dark",
   "workbench.iconTheme": "material-icon-theme",
   "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#181818",
+    "titleBar.inactiveBackground": "#181818",
+    "panel.background": "#181818",
+    "panel.border": "#383838",
     "scrollbar.shadow": "#ffffff00",
     "widget.shadow": "#ffffff00"
   },
