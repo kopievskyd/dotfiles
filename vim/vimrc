@@ -13,5 +13,37 @@ set noswapfile
 set viminfo=""
 set clipboard=unnamed
 let g:netrw_banner=0
+let g:netrw_dirhistmax=0
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
+
+let mapleader = " "
+nnoremap <expr> j v:count ? 'j' : 'gj'
+nnoremap <expr> k v:count ? 'k' : 'gk'
+nnoremap <leader>e :call ToggleNetrw()<CR>
+nnoremap <leader>h :nohl<CR>
+nnoremap <leader>bn :bnext<CR>
+nnoremap <leader>bd :bdelete<CR>
+
+function! ToggleNetrw()
+  let netrw_open = v:false
+
+  for win in range(1, winnr('$'))
+    let buf = winbufnr(win)
+    if &filetype == 'netrw' && buf != -1
+      let netrw_open = v:true
+      break
+    endif
+  endfor
+
+  if netrw_open
+    let buffers = filter(range(1, bufnr('$')), 'buflisted(v:val)')
+    if len(buffers) > 0
+      execute 'buffer ' . buffers[0]
+    else
+      bdelete
+    endif
+  else
+    Explore
+  endif
+endfunction
