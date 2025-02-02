@@ -53,6 +53,23 @@ install_brew_packages() {
     fi
 }
 
+# Install Node.js
+install_nodejs() {
+    if ! command -v fnm >/dev/null 2>&1; then
+        echo "Installing fnm (Fast Node Manager)..."
+        brew install fnm
+    else
+        echo "fnm is already installed"
+    fi
+
+    eval "$(fnm env --use-on-cd --shell zsh)"
+    echo "Installing the latest LTS version of Node.js..."
+    fnm install --lts
+
+    echo "Node.js installation complete. Current version: $(node -v)"
+}
+
+
 # Install JetBrains Mono font
 install_jetbrains_mono() {
     TEMP_DIR=$(mktemp -d)
@@ -91,6 +108,7 @@ echo "Starting setup..."
 install_homebrew
 create_symlinks
 install_brew_packages
+install_nodejs
 install_jetbrains_mono
 touch "$HOME/.hushlogin"
 echo "Setup complete!"
