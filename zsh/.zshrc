@@ -55,3 +55,6 @@ fi
 
 # Powerlevel10k
 [[ ! -f "$HOME/.config/zsh/.p10k.zsh" ]] || source "$HOME/.config/zsh/.p10k.zsh"
+
+# Fast Node Manager
+eval "$(fnm env --use-on-cd --shell zsh)"
