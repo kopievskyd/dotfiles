@@ -2,7 +2,7 @@
 
 Clone the repository:
 ```
-mkdir -p ~/Developer && git clone git@github.com:kpvskd/dot.git ~/Developer/dot
+git clone git@github.com:kpvskd/dot.git ~/Developer/dot
 ```
 
 Run the setup script:
