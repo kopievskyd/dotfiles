@@ -67,14 +67,6 @@
   "files.trimFinalNewlines": true,
   "editor.formatOnSave": true,
 
-  // Language specific
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[lua]": {
-    "editor.defaultFormatter": "JohnnyMorganz.stylua"
-  },
-
   // Telemetry
   "telemetry.telemetryLevel": "off",
   "editor.experimental.treeSitterTelemetry": false,
@@ -83,5 +75,17 @@
   "security.workspace.trust.enabled": false,
   "workbench.settings.editor": "json",
   "workbench.startupEditor": "none",
-  "git.enabled": false
+  "git.enabled": false,
+
+  // Vim
+  "vim.useSystemClipboard": true,
+  "vim.highlightedyank.enable": true,
+
+  // Language specific
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[lua]": {
+    "editor.defaultFormatter": "JohnnyMorganz.stylua"
+  }
 }
