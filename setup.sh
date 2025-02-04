@@ -37,7 +37,9 @@ create_symlinks() {
     symlink "$CONFIG_DIR/git/config" "$HOME/.config/git/config"
     symlink "$CONFIG_DIR/git/ignore" "$HOME/.config/git/ignore"
     symlink "$CONFIG_DIR/vim/vimrc" "$HOME/.config/vim/vimrc"
+    symlink "$CONFIG_DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
     symlink "$CONFIG_DIR/ghostty/config" "$HOME/.config/ghostty/config"
+    symlink "$CONFIG_DIR/hammerspoon/init.lua" "$HOME/.config/hammerspoon/init.lua"
     symlink "$CONFIG_DIR/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
 }
 
@@ -103,6 +105,16 @@ install_jetbrains_mono() {
     echo "JetBrains Mono fonts installed successfully"
 }
 
+# Macos defaults setup
+macos_defaults_setup() {
+    defaults write org.hammerspoon.Hammerspoon MJConfigFile "$HOME/.config/hammerspoon/init.lua"
+    defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+    defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+    defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+    defaults write com.apple.dock autohide-delay -float 0 && \
+    killall Dock
+}
+
 # Main setup
 echo "Starting setup..."
 install_homebrew
@@ -110,5 +122,6 @@ create_symlinks
 install_brew_packages
 install_nodejs
 install_jetbrains_mono
+macos_defaults_setup
 touch "$HOME/.hushlogin"
 echo "Setup complete!"
