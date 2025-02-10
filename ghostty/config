@@ -1,6 +1,30 @@
-theme = light:zenwritten_light,dark:zenwritten_dark
 font-family = JetBrains Mono
 font-feature = -calt
 font-size = 14
-window-padding-x = 10
+window-padding-x = 15
+window-save-state = always
 unfocused-split-opacity = 1
+macos-titlebar-style = tabs
+title = " "
+
+palette = 0=#090618
+palette = 1=#c4746e
+palette = 2=#76946a
+palette = 3=#c0a36e
+palette = 4=#7e9cd8
+palette = 5=#957fb8
+palette = 6=#6a9589
+palette = 7=#c8c093
+palette = 8=#727169
+palette = 9=#e46876
+palette = 10=#98bb6c
+palette = 11=#e6c384
+palette = 12=#7fb4ca
+palette = 13=#938aa9
+palette = 14=#7aa89f
+palette = 15=#dcd7ba
+background = #080808
+foreground = #c7c7c7
+cursor-text = #1d202f
+selection-background = #2d4f67
+selection-foreground = #c8c093
