@@ -37,7 +37,6 @@ create_symlinks() {
     symlink "$CONFIG_DIR/git/config" "$HOME/.config/git/config"
     symlink "$CONFIG_DIR/git/ignore" "$HOME/.config/git/ignore"
     symlink "$CONFIG_DIR/vim/vimrc" "$HOME/.config/vim/vimrc"
-    symlink "$CONFIG_DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
     symlink "$CONFIG_DIR/ghostty/config" "$HOME/.config/ghostty/config"
     symlink "$CONFIG_DIR/hammerspoon/init.lua" "$HOME/.config/hammerspoon/init.lua"
     symlink "$CONFIG_DIR/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
