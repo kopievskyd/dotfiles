@@ -1,3 +1,5 @@
+" Options
+set number
 set mouse=a
 set tabstop=4
 set shiftwidth=4
@@ -7,9 +9,65 @@ set ignorecase
 set smartcase
 set hlsearch
 set noswapfile
+set termguicolors
 set viminfo=""
 set clipboard=unnamed
+set fillchars+=eob:\ 
 let g:netrw_banner=0
 let g:netrw_dirhistmax=0
+let g:highlightedyank_highlight_duration = 100
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
+
+" Keymaps
+let mapleader = " "
+nnoremap <expr> j v:count ? 'j' : 'gj'
+nnoremap <expr> k v:count ? 'k' : 'gk'
+nnoremap <leader>e :call ToggleNetrw()<CR>
+nnoremap <leader>h :nohl<CR>
+nnoremap <leader>bb :bnext<CR>
+nnoremap <leader>bd :bdelete<CR>
+
+" Function for toggle netrw
+function! ToggleNetrw()
+  let netrw_open = v:false
+  for win in range(1, winnr('$'))
+    let buf = winbufnr(win)
+    if &filetype == 'netrw' && buf != -1
+      let netrw_open = v:true
+      break
+    endif
+  endfor
+  if netrw_open
+    let buffers = filter(range(1, bufnr('$')), 'buflisted(v:val)')
+    if len(buffers) > 0
+      execute 'buffer ' . buffers[0]
+    else
+      bdelete
+    endif
+  else
+    Explore
+  endif
+endfunction
+
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '$HOME/.config/vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall! --sync | source $MYVIMRC
+endif
+
+call plug#begin()
+Plug 'metalelf0/base16-black-metal-scheme'
+Plug 'machakann/vim-highlightedyank'
+Plug 'tpope/vim-commentary'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
+call plug#end()
+
+colorscheme base16-black-metal-gorgoroth
+hi Normal guibg=NONE ctermbg=NONE
+hi NonText guibg=NONE ctermbg=NONE
+hi EndOfBuffer guibg=NONE ctermbg=NONE
+hi SignColumn guibg=NONE ctermbg=NONE
+hi LineNr guibg=NONE ctermbg=NONE
+hi FoldColumn guibg=NONE ctermbg=NONE
