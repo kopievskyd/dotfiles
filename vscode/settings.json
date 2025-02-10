@@ -7,6 +7,7 @@
     "titleBar.inactiveBackground": "#181818",
     "panel.background": "#181818",
     "panel.border": "#383838",
+    "editorIndentGuide.background1": "#242424",
     "scrollbar.shadow": "#ffffff00",
     "widget.shadow": "#ffffff00"
   },
@@ -28,6 +29,7 @@
   // Editor
   "editor.stickyScroll.enabled": false,
   "editor.bracketPairColorization.enabled": false,
+  "editor.guides.highlightActiveIndentation": false,
   "editor.occurrencesHighlight": "off",
   "editor.selectionHighlight": false,
   "editor.matchBrackets": "never",
