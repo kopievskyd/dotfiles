@@ -1,11 +1,5 @@
-local plugins = {
-	{ "echasnovski/mini.surround", event = "VeryLazy" },
-	{ "echasnovski/mini.pairs", event = "InsertEnter" },
-	{ "echasnovski/mini.pick", event = "VeryLazy" },
+return {
+	{ "echasnovski/mini.surround", event = "VeryLazy", version = false, config = true },
+	{ "echasnovski/mini.pairs", event = "InsertEnter", version = false, config = true },
+	{ "echasnovski/mini.pick", event = "VeryLazy", version = false, config = true },
 }
-
-return vim.tbl_map(function(plugin)
-	plugin.version = plugin.version or false
-	plugin.config = plugin.config or true
-	return plugin
-end, plugins)

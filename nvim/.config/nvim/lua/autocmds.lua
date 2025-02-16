@@ -17,32 +17,30 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- automatically delete empty buffers
 vim.api.nvim_create_autocmd("BufEnter", {
-  callback = function()
-    local current_buf = vim.api.nvim_get_current_buf()
-
-    for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-      if
-        bufnr ~= current_buf
-        and vim.api.nvim_buf_get_name(bufnr) == ""
-        and vim.api.nvim_buf_is_loaded(bufnr)
-        and vim.bo[bufnr].buftype == ""
-      then
-        vim.api.nvim_buf_delete(bufnr, { force = true })
-      end
-    end
-  end,
+	callback = function()
+		local current_buf = vim.api.nvim_get_current_buf()
+		for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+			if
+				bufnr ~= current_buf
+				and vim.api.nvim_buf_get_name(bufnr) == ""
+				and vim.api.nvim_buf_is_loaded(bufnr)
+				and vim.bo[bufnr].buftype == ""
+			then
+				vim.api.nvim_buf_delete(bufnr, { force = true })
+			end
+		end
+	end,
 })
 
 -- automatically delete directory buffers
 vim.api.nvim_create_autocmd("BufEnter", {
-  callback = function()
-    local buf = vim.api.nvim_get_current_buf()
-    local name = vim.api.nvim_buf_get_name(buf)
-
-    if vim.fn.isdirectory(name) == 1 then
-      vim.schedule(function()
-        vim.api.nvim_buf_delete(buf, { force = true })
-      end)
-    end
-  end,
+	callback = function()
+		local current_buf = vim.api.nvim_get_current_buf()
+		local name = vim.api.nvim_buf_get_name(current_buf)
+		if vim.fn.isdirectory(name) == 1 then
+			vim.schedule(function()
+				vim.api.nvim_buf_delete(current_buf, { force = true })
+			end)
+		end
+	end,
 })
