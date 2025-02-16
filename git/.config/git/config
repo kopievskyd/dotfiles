@@ -1,0 +1,10 @@
+[init]
+	defaultBranch = main
+[user]
+	name = Dmitry Kopievsky
+	email = kopievskyd@gmail.com
+    signingkey = 2F9338C1FAB7D45E
+[commit]
+	gpgsign = true
+[tag]
+    gpgSign = true
