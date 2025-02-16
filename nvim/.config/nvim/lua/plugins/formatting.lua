@@ -7,6 +7,7 @@ return {
 			go = { "gopls" },
 			toml = { "taplo" },
 			zsh = { "beautysh" },
+			sh = { "beautysh" },
 		},
 	},
 	config = function(_, opts)
