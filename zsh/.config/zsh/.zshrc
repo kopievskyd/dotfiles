@@ -44,14 +44,6 @@ bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
 
 # Aliases
-# alias tree='tree -C --dirsfirst --noreport'
-# alias ll='tree -L1'
-# alias ls='ls -lAh --color'
-# alias ls='eza --tree --level=1 --color=always --group-directories-first'
-# alias lh='eza --tree --all --level=1 --color=always --group-directories-first'
-# alias ll='eza --long --all --total-size --level=1 --color=always --group-directories-first'
-# alias tree='eza --tree --color=always --group-directories-first'
-# alias ls='ls -lAh --color | grep "^d" |grep -v ^total && ls -lAh | grep -v "^d"'
 alias ls='ls -lAh --color | grep "^d" | grep -v "^total" && ls -lAh --color | grep -v "^d" | grep -v "^total"'
 alias tree='tree -C --dirsfirst --noreport'
 alias mkdir='mkdir -p'
