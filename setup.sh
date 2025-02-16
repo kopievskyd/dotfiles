@@ -22,14 +22,10 @@ create_symlinks() {
 
 # Install packages from Brewfile
 install_brew_packages() {
-    if [ -f "$BREWFILE_PATH" ]; then
-        echo "Installing formulae and casks from Brewfile..."
-        brew bundle --global
-        brew cleanup --prune=all
-        rm -rf "$(brew --cache)"
-    else
-        echo "No Brewfile found at $BREWFILE_PATH"
-    fi
+    echo "Installing formulae and casks from Brewfile..."
+    brew bundle --global
+    brew cleanup --prune=all
+    rm -rf "$(brew --cache)"
 }
 
 # Install Node.js
@@ -40,11 +36,9 @@ install_nodejs() {
     else
         echo "fnm is already installed"
     fi
-
     eval "$(fnm env --use-on-cd --shell zsh)"
     echo "Installing the latest LTS version of Node.js..."
     fnm install --lts
-
     echo "Node.js installation complete. Current version: $(node -v)"
 }
 
@@ -52,33 +46,25 @@ install_nodejs() {
 # Install JetBrains Mono font
 install_jetbrains_mono() {
     TEMP_DIR=$(mktemp -d)
-
     echo "Downloading JetBrains Mono..."
     LATEST_RELEASE_URL=$(curl -s https://api.github.com/repos/JetBrains/JetBrainsMono/releases/latest |
-        grep "browser_download_url.*JetBrainsMono-[0-9.]*.zip" |
-        cut -d '"' -f 4)
-
+    grep "browser_download_url.*JetBrainsMono-[0-9.]*.zip" | cut -d '"' -f 4)
     if [ -z "$LATEST_RELEASE_URL" ]; then
         echo "Error: Could not find the latest version of JetBrains Mono"
         rm -rf "$TEMP_DIR"
         return 1
     fi
-
     curl -L -o "$TEMP_DIR/JetBrainsMono.zip" "$LATEST_RELEASE_URL"
     unzip -q "$TEMP_DIR/JetBrainsMono.zip" -d "$TEMP_DIR"
-
     TTF_DIR=$(find "$TEMP_DIR" -type d -name "ttf" | head -n 1)
-
     if [ -z "$TTF_DIR" ]; then
         echo "Error: TTF folder not found"
         rm -rf "$TEMP_DIR"
         return 1
     fi
-
     mkdir -p "$FONT_DIR"
     cp "$TTF_DIR"/JetBrainsMono-*.ttf "$FONT_DIR/"
     rm -rf "$TEMP_DIR"
-
     echo "JetBrains Mono fonts installed successfully"
 }
 
@@ -87,8 +73,7 @@ macos_defaults_setup() {
     defaults write org.hammerspoon.Hammerspoon MJConfigFile "$HOME/.config/hammerspoon/init.lua"
     defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
     defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
-    defaults write com.apple.dock autohide-delay -float 0 && \
-    killall Dock
+    defaults write com.apple.dock autohide-delay -float 0 && \ killall Dock
 }
 
 # Main setup
