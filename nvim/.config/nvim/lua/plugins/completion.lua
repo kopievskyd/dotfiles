@@ -14,6 +14,8 @@ return {
 				},
 			},
 		},
-		sources = { cmdline = {} },
+		cmdline = {
+			enabled = false,
+		},
 	},
 }
