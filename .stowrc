@@ -1,2 +1,4 @@
 --target=/Users/kopievskyd/
 --ignore=.DS_Store
+--no-folding
+--restow
