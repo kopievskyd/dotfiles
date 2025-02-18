@@ -2,10 +2,10 @@
 
 Clone the repository:
 ```
-git clone git@github.com:kpvskd/dot.git ~/Developer/dot
+git clone git@github.com:kopievskyd/dotfiles.git ~/Developer/dotfiles
 ```
 
-Run the setup script:
+Use GNU Stow:
 ```
-cd ~/Developer/dot && sh setup.sh
+cd ~/Developer/dot && stow */
 ```
