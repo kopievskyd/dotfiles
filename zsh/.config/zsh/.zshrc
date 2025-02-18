@@ -42,6 +42,7 @@ setopt hist_ignore_space
 setopt hist_reduce_blanks
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
+bindkey -v '^?' backward-delete-char
 
 # Aliases
 alias ls='ls -lAh --color | grep "^d" | grep -v "^total" && ls -lAh --color | grep -v "^d" | grep -v "^total"'
