@@ -11,9 +11,7 @@ require("options")
 require("autocmds")
 require("keymaps")
 
--- load plugins
-require("lazy").setup({
-	spec = { { import = "plugins" } },
+require("lazy").setup(require("plugins"), {
 	rocks = { enabled = false },
 	change_detection = { notify = false },
 })
