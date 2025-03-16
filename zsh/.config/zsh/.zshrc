@@ -48,15 +48,12 @@ bindkey -v '^?' backward-delete-char
 alias ls='ls -lAh --color | grep "^d" | grep -v "^total" && ls -lAh --color | grep -v "^d" | grep -v "^total"'
 alias tree='tree -C --dirsfirst --noreport'
 alias mkdir='mkdir -p'
-alias stow='stow --restow --no-folding'
 
 # Powerlevel10k
-[[ ! -f "$HOME/.config/zsh/.p10k.zsh" ]] || source "$HOME/.config/zsh/.p10k.zsh"
+[ -f "$HOME/.config/zsh/.p10k.zsh" ] && source "$HOME/.config/zsh/.p10k.zsh"
 
 # Homebrew
-if [[ -f "/opt/homebrew/bin/brew" ]] then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
+[ -f "/opt/homebrew/bin/brew" ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Fast Node Manager
-eval "$(fnm env --use-on-cd --shell zsh)"
+[ -f "/opt/homebrew/bin/fnm" ] && eval "$(fnm env --use-on-cd --shell zsh)"
