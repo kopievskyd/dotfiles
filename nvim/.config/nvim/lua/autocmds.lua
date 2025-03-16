@@ -1,12 +1,14 @@
+local autocmd = vim.api.nvim_create_autocmd
+
 -- highlight on yank
-vim.api.nvim_create_autocmd("TextYankPost", {
+autocmd("TextYankPost", {
 	callback = function()
 		vim.highlight.on_yank()
 	end,
 })
 
 -- disable LSP semantic tokens
-vim.api.nvim_create_autocmd("LspAttach", {
+autocmd("LspAttach", {
 	callback = function(args)
 		local client = vim.lsp.get_client_by_id(args.data.client_id)
 		if client and client.server_capabilities.semanticTokensProvider then
@@ -16,7 +18,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 -- automatically delete empty buffers
-vim.api.nvim_create_autocmd("BufEnter", {
+autocmd("BufEnter", {
 	callback = function()
 		local current_buf = vim.api.nvim_get_current_buf()
 		for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
@@ -33,7 +35,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 -- automatically delete directory buffers
-vim.api.nvim_create_autocmd("BufEnter", {
+autocmd("BufEnter", {
 	callback = function()
 		local current_buf = vim.api.nvim_get_current_buf()
 		local name = vim.api.nvim_buf_get_name(current_buf)
@@ -43,4 +45,16 @@ vim.api.nvim_create_autocmd("BufEnter", {
 			end)
 		end
 	end,
+})
+
+-- make background transparent
+autocmd({"VimEnter", "ColorScheme"}, {
+    callback = function()
+        local function apply_transparent()
+            pcall(vim.api.nvim_set_hl, 0, "Normal", {bg = "NONE", ctermbg = "NONE"})
+            pcall(vim.api.nvim_set_hl, 0, "NormalNC", {bg = "NONE", ctermbg = "NONE"})
+        end
+        apply_transparent()
+        vim.defer_fn(apply_transparent, 10)
+    end,
 })

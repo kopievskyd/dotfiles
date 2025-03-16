@@ -11,7 +11,7 @@ utils.map("n", "<leader>bd", ":bdelete<CR>", { desc = "Delete buffer" })
 -- clear search
 utils.map("n", "<leader>h", ":nohl<CR>", { desc = "Clear search highlights" })
 
--- toggle options
+-- explorer
 utils.map("n", "<leader>e", utils.toggle_netrw, { desc = "Toggle explorer" })
 
 -- formatting

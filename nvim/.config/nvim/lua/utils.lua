@@ -34,14 +34,4 @@ function M.format_buffer()
 	require("conform").format({ async = true, lsp_fallback = true })
 end
 
----builds the tabline string with icon and file name
----@return string
-function M.build_tabline()
-	local buf = vim.api.nvim_get_current_buf()
-	local bufname = vim.api.nvim_buf_get_name(buf)
-	local filetype = vim.bo[buf].filetype
-	local icon = (filetype == "netrw" and " ") or (bufname == "" and "") or ""
-	return icon .. " %t"
-end
-
 return M
