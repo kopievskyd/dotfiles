@@ -5,3 +5,5 @@ font-size = 14
 adjust-cell-height = 3
 window-padding-x = 10
 unfocused-split-opacity = 1
+maximize = true
+auto-update-channel = tip
