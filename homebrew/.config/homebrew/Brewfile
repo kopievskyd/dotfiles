@@ -25,6 +25,7 @@ cask "visual-studio-code"
 cask "telegram-desktop"
 cask "figma"
 cask "obsidian"
+cask "firefox"
 cask "ghostty"
 cask "hammerspoon"
 
