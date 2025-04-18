@@ -8,6 +8,7 @@ export NPM_CONFIG_USERCONFIG="$HOME/.config/npm/npmrc"
 export NPM_CONFIG_CACHE="$HOME/.local/cache/npm"
 export GOPATH="$HOME/.local/share/go"
 export PATH="$PATH:$GOPATH/bin"
+export HOMEBREW_BUNDLE_FILE="$HOME/.config/homebrew/Brewfile"
 export HOMEBREW_NO_ANALYTICS=1
 export VISUAL=nvim
 export EDITOR=nvim
