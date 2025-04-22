@@ -45,7 +45,7 @@ bindkey '^[[B' history-search-forward
 bindkey -v '^?' backward-delete-char
 
 # Aliases
-alias ls='ls -lAh --color | grep "^d" | grep -v "^total" && ls -lAh --color | grep -v "^d" | grep -v "^total"'
+alias ls='ls -lah --color'
 alias tree='tree -C --dirsfirst --noreport'
 alias mkdir='mkdir -p'
 
