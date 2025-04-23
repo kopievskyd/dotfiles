@@ -100,6 +100,10 @@ install_nodejs() {
     fnm install --lts
     [ $? -ne 0 ] && return 1
 
+    echo "Activating latest LTS version of Node.js..."
+    fnm use --lts
+    [ $? -ne 0 ] && return 1
+
     echo "Node.js installation complete. Current version: $(node -v)"
 }
 
