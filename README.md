@@ -1,11 +1,5 @@
 ## Installation
 
-Clone the repository:
 ```
-git clone git@github.com:kopievskyd/dotfiles.git ~/Developer/dotfiles
-```
-
-Use GNU Stow:
-```
-cd ~/Developer/dot && stow */
+sh -c "$(curl -sSL https://raw.githubusercontent.com/kopievskyd/dotfiles/refs/heads/main/setup.sh)"
 ```
