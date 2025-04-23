@@ -96,9 +96,6 @@ install_nodejs() {
         echo "Fast Node Manager (fnm) is already installed!"
     fi
 
-    echo "Setting up Fast Node Manager (fnm) environment..."
-    eval "$(fnm env --use-on-cd --shell zsh)"
-
     echo "Installing the latest LTS version of Node.js..."
     fnm install --lts
     [ $? -ne 0 ] && return 1
