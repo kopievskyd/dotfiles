@@ -48,13 +48,34 @@ autocmd("BufEnter", {
 })
 
 -- make background transparent
-autocmd({"VimEnter", "ColorScheme"}, {
-    callback = function()
-        local function apply_transparent()
-            pcall(vim.api.nvim_set_hl, 0, "Normal", {bg = "NONE", ctermbg = "NONE"})
-            pcall(vim.api.nvim_set_hl, 0, "NormalNC", {bg = "NONE", ctermbg = "NONE"})
-        end
-        apply_transparent()
-        vim.defer_fn(apply_transparent, 10)
-    end,
+autocmd("OptionSet", {
+	pattern = "background" ,
+	callback = function()
+		local function apply_transparent()
+			pcall(vim.api.nvim_set_hl, 0, "Normal", { bg = "NONE", ctermbg = "NONE" })
+			pcall(vim.api.nvim_set_hl, 0, "NormalNC", { bg = "NONE", ctermbg = "NONE" })
+		end
+		apply_transparent()
+		vim.defer_fn(apply_transparent, 10)
+	end,
+})
+
+-- set diagnostic highlights
+autocmd("OptionSet", {
+	pattern = "background",
+	callback = function()
+		local theme = vim.o.background
+		local palette = {
+			Error = { light = { "#ff5370", "#ffd7d7" }, dark = { "#ff5370", "#3f0000" } },
+			Warn = { light = { "#9a6700", "#fffacd" }, dark = { "#ffcb6b", "#3f2500" } },
+			Hint = { light = { "#007300", "#e0f5e0" }, dark = { "#c3e88d", "#003f00" } },
+			Info = { light = { "#0064c7", "#d7e5f0" }, dark = { "#82aaff", "#002a3f" } },
+		}
+		for type, variants in pairs(palette) do
+			local fg = variants[theme][1]
+			local bg = variants[theme][2]
+			vim.api.nvim_set_hl(0, "DiagnosticVirtualText" .. type, { fg = fg, bg = bg, bold = true })
+			vim.api.nvim_set_hl(0, "DiagnosticUnderline" .. type, { sp = fg, undercurl = true })
+		end
+	end,
 })

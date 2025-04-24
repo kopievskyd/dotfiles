@@ -49,6 +49,15 @@ return {
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
 		opts = {
+			diagnostics = {
+				signs = false,
+				virtual_text = {
+					prefix = "●",
+					source = false,
+				},
+				update_in_insert = true,
+				severity_sort = true,
+			},
 			servers = {
 				lua_ls = {
 					settings = {
@@ -74,12 +83,10 @@ return {
 		config = function(_, opts)
 			local lspconfig = require("lspconfig")
 
-			-- disable error/warning signs in signcolumn
-			vim.diagnostic.config({
-				signs = false,
-			})
+			if opts.diagnostics then
+				vim.diagnostic.config(opts.diagnostics)
+			end
 
-			-- setup LSP servers
 			for server, config in pairs(opts.servers) do
 				config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
 				lspconfig[server].setup(config)
