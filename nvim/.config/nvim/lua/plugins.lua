@@ -38,9 +38,6 @@ return {
 					},
 				},
 			},
-			cmdline = {
-				enabled = false,
-			},
 		},
 	},
 

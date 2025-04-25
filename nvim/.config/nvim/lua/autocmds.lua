@@ -49,11 +49,15 @@ autocmd("BufEnter", {
 
 -- make background transparent
 autocmd("OptionSet", {
-	pattern = "background" ,
+	pattern = "background",
 	callback = function()
 		local function apply_transparent()
 			pcall(vim.api.nvim_set_hl, 0, "Normal", { bg = "NONE", ctermbg = "NONE" })
 			pcall(vim.api.nvim_set_hl, 0, "NormalNC", { bg = "NONE", ctermbg = "NONE" })
+			pcall(vim.api.nvim_set_hl, 0, "WinBar", { bg = "NONE", ctermbg = "NONE" })
+			pcall(vim.api.nvim_set_hl, 0, "WinBarNC", { bg = "NONE", ctermbg = "NONE" })
+			pcall(vim.api.nvim_set_hl, 0, "MiniPickNormal", { bg = "NONE", ctermbg = "NONE" })
+			pcall(vim.api.nvim_set_hl, 0, "MiniPickBorder", { bg = "NONE", ctermbg = "NONE" })
 		end
 		apply_transparent()
 		vim.defer_fn(apply_transparent, 10)

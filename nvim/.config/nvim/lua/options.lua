@@ -30,3 +30,4 @@ opt.tabstop = 4 -- number of spaces tabs count for
 opt.undofile = true -- enable persistent undo history
 opt.undolevels = 10000 -- set maximum number of undo levels
 opt.wildmode = "longest:full,full" -- command-line completion mode
+opt.winbar = "%!v:lua.require'utils'.build_winbar()" -- show filename with icon in winbar
