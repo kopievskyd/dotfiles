@@ -34,14 +34,39 @@ function M.format_buffer()
 	require("conform").format({ async = true, lsp_fallback = true })
 end
 
----builds the winbar string with icon and file name
+---builds the winbar string with icon, file name ang git info
 ---@return string
 function M.build_winbar()
 	local buf = vim.api.nvim_get_current_buf()
 	local bufname = vim.api.nvim_buf_get_name(buf)
 	local filetype = vim.bo[buf].filetype
-	local icon = (filetype == "netrw" and "  ") or (bufname == "" and " ") or " "
-	return icon .. "%t"
+
+	local icon = (vim.bo.modified and " ")
+		or ((filetype == "netrw" and "  ") or (bufname == "" and " ") or " ")
+
+	local git_branch = ""
+	local handle = io.popen("git branch --show-current 2>/dev/null")
+	if handle then
+		git_branch = handle:read("*l") or ""
+		handle:close()
+	end
+
+	local dirty = ""
+	if bufname ~= "" and git_branch ~= "" then
+		local cmd = string.format(
+			"git status --porcelain --untracked-files=all -- %s 2>/dev/null",
+			vim.fn.shellescape(vim.fn.fnamemodify(bufname, ":p"))
+		)
+		local stat = io.popen(cmd)
+		if stat then
+			dirty = stat:read("*a") ~= "" and "*" or ""
+			stat:close()
+		end
+	end
+
+	local git_info = (git_branch ~= "") and (" %#LineNr#" .. git_branch .. dirty .. "%*") or ""
+
+	return icon .. "%t" .. git_info
 end
 
 return M

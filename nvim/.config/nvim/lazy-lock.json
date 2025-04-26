@@ -6,6 +6,6 @@
   "mason.nvim": { "branch": "main", "commit": "fc98833b6da5de5a9c5b1446ac541577059555be" },
   "mini.pairs": { "branch": "main", "commit": "69864a2efb36c030877421634487fd90db1e4298" },
   "mini.pick": { "branch": "main", "commit": "417c273861971b451687e847383e61687463b06e" },
-  "nvim-lspconfig": { "branch": "master", "commit": "7d32353d99fa24c9c2fac993b8378afbc92df94b" },
+  "nvim-lspconfig": { "branch": "master", "commit": "f875e581b67fa21417cc6836fe68273e42b6b1b1" },
   "nvim-surround": { "branch": "main", "commit": "0e62500b98f4513feaaf7425c135472457ea5b7d" }
 }
