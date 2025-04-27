@@ -49,7 +49,6 @@ autocmd("BufEnter", {
 
 -- make background transparent
 autocmd("OptionSet", {
-	pattern = "background",
 	callback = function()
 		local function apply_transparent()
 			pcall(vim.api.nvim_set_hl, 0, "Normal", { bg = "NONE", ctermbg = "NONE" })
@@ -60,13 +59,12 @@ autocmd("OptionSet", {
 			pcall(vim.api.nvim_set_hl, 0, "MiniPickBorder", { bg = "NONE", ctermbg = "NONE" })
 		end
 		apply_transparent()
-		vim.defer_fn(apply_transparent, 10)
+		vim.defer_fn(apply_transparent, 100)
 	end,
 })
 
 -- set diagnostic highlights
 autocmd("OptionSet", {
-	pattern = "background",
 	callback = function()
 		local theme = vim.o.background
 		local palette = {
