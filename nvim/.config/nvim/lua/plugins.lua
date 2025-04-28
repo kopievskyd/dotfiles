@@ -1,5 +1,5 @@
 return {
-	-- mason
+	-- Mason
 	{
 		"williamboman/mason.nvim",
 		event = { "BufReadPre", "BufNewFile" },
@@ -21,7 +21,7 @@ return {
 		end,
 	},
 
-	-- completion
+	-- Completion
 	{
 		"saghen/blink.cmp",
 		event = "InsertEnter",
@@ -41,7 +41,7 @@ return {
 		},
 	},
 
-	-- lspconfig
+	-- Lspconfig
 	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
@@ -91,7 +91,7 @@ return {
 		end,
 	},
 
-	-- formatting
+	-- Formatting
 	{
 		"stevearc/conform.nvim",
 		event = { "VeryLazy" },
@@ -109,7 +109,7 @@ return {
 		end,
 	},
 
-	-- surround
+	-- Surround
 	{
 		"kylechui/nvim-surround",
 		version = "*",
@@ -117,7 +117,7 @@ return {
 		config = true,
 	},
 
-	-- autopairs
+	-- Autopairs
 	{
 		"echasnovski/mini.pairs",
 		event = "InsertEnter",
@@ -125,7 +125,7 @@ return {
 		config = true,
 	},
 
-	-- picker
+	-- Picker
 	{
 		"echasnovski/mini.pick",
 		event = "VeryLazy",
