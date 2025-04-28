@@ -1,13 +1,13 @@
 local autocmd = vim.api.nvim_create_autocmd
 
--- highlight on yank
+-- Highlight on yank
 autocmd("TextYankPost", {
 	callback = function()
 		vim.highlight.on_yank()
 	end,
 })
 
--- disable LSP semantic tokens
+-- Disable LSP semantic tokens
 autocmd("LspAttach", {
 	callback = function(args)
 		local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -17,7 +17,7 @@ autocmd("LspAttach", {
 	end,
 })
 
--- automatically delete empty buffers
+-- Automatically delete empty buffers
 autocmd("BufEnter", {
 	callback = function()
 		local current_buf = vim.api.nvim_get_current_buf()
@@ -34,7 +34,7 @@ autocmd("BufEnter", {
 	end,
 })
 
--- automatically delete directory buffers
+-- Automatically delete directory buffers
 autocmd("BufEnter", {
 	callback = function()
 		local current_buf = vim.api.nvim_get_current_buf()
@@ -47,7 +47,7 @@ autocmd("BufEnter", {
 	end,
 })
 
--- make background transparent
+-- Make background transparent
 autocmd("OptionSet", {
 	callback = function()
 		local function apply_transparent()
@@ -63,7 +63,7 @@ autocmd("OptionSet", {
 	end,
 })
 
--- set diagnostic highlights
+-- Set diagnostic highlights
 autocmd("OptionSet", {
 	callback = function()
 		local theme = vim.o.background
@@ -79,5 +79,12 @@ autocmd("OptionSet", {
 			vim.api.nvim_set_hl(0, "DiagnosticVirtualText" .. type, { fg = fg, bg = bg, bold = true })
 			vim.api.nvim_set_hl(0, "DiagnosticUnderline" .. type, { sp = fg, undercurl = true })
 		end
+	end,
+})
+
+-- Update git info when the file is saved
+autocmd("BufWritePost", {
+	callback = function()
+		require("utils").update_git_info()
 	end,
 })
