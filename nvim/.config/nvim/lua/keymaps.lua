@@ -6,6 +6,7 @@ utils.map("n", "j", [[v:count?'j':'gj']], { expr = true, desc = "Move cursor dow
 
 -- buffers
 utils.map("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer" })
+utils.map("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
 utils.map("n", "<leader>bd", ":bdelete<CR>", { desc = "Delete buffer" })
 
 -- clear search
