@@ -1,4 +1,4 @@
-# CLI Tools (Formulae)
+# Formulae (CLI Tools)
 brew "git"
 brew "fzf"
 brew "wget"
@@ -11,7 +11,7 @@ brew "pinentry-mac"
 brew "fnm"
 brew "go"
 
-# Applications (Casks)
+# Casks (Applications)
 cask "rectangle"
 cask "syncthing"
 cask "pika"
