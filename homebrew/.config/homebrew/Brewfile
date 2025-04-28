@@ -1,4 +1,4 @@
-# Formulae
+# CLI Tools (Formulae)
 brew "git"
 brew "fzf"
 brew "wget"
@@ -11,7 +11,7 @@ brew "pinentry-mac"
 brew "fnm"
 brew "go"
 
-# Casks
+# Applications (Casks)
 cask "rectangle"
 cask "syncthing"
 cask "pika"
@@ -31,7 +31,7 @@ cask "tunnelblick"
 cask "transmission"
 cask "hammerspoon"
 
-# VSCode extension
+# VS Code Extensions
 vscode "pkief.material-icon-theme"
 vscode "usernamehw.errorlens"
 vscode "vscodevim.vim"
