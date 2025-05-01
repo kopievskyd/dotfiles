@@ -27,7 +27,6 @@ cask "firefox"
 cask "figma"
 cask "obsidian"
 cask "ghostty@tip"
-cask "tunnelblick"
 cask "transmission"
 cask "hammerspoon"
 
