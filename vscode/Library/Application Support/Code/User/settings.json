@@ -38,7 +38,6 @@
   "editor.overviewRulerBorder": false,
   "editor.hideCursorInOverviewRuler": true,
   "editor.colorDecorators": false,
-  "editor.renderLineHighlight": "all",
   "editor.parameterHints.enabled": false,
   "editor.hover.enabled": false,
   "breadcrumbs.enabled": false,
@@ -55,6 +54,8 @@
   "workbench.tree.enableStickyScroll": false,
   "workbench.tree.renderIndentGuides": "none",
   "workbench.tree.indent": 16,
+  "git.decorations.enabled": false,
+  "scm.diffDecorations": "none",
 
   // Zen mode
   "zenMode.showTabs": "none",
@@ -74,7 +75,7 @@
   "security.workspace.trust.enabled": false,
   "workbench.settings.editor": "json",
   "workbench.startupEditor": "none",
-  "git.enabled": false,
+  "extensions.ignoreRecommendations": true,
 
   // Vim
   "vim.useSystemClipboard": true,
