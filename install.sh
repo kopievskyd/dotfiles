@@ -22,10 +22,10 @@ setup_bare_repo() {
     fi
 
     printf "Checkout dotfiles...\n"
-    _dotfiles config core.sparseCheckout true || return 1
-    _dotfiles sparse-checkout init --no-cone || return 1
-    _dotfiles sparse-checkout set '/*' '!README.md' '!LICENSE' '!install.sh' || return 1
-    _dotfiles config status.showUntrackedFiles no || return 1
+    _dotfiles config core.sparseCheckout true
+    _dotfiles sparse-checkout init --no-cone
+    _dotfiles sparse-checkout set '/*' '!README.md' '!LICENSE' '!install.sh'
+    _dotfiles config status.showUntrackedFiles no
     _dotfiles checkout || return 1
 }
 
