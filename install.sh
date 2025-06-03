@@ -54,14 +54,13 @@ install_nodejs() {
         brew install fnm
         eval "$(/opt/homebrew/bin/fnm env)"
     fi
-    printf "Installing the latest LTS version of Node.js...\n"
     fnm install --lts || return 1
 }
 
 create_vscode_symlinks() {
     if [ -f "$VSCODE_SETTINGS_SOURCE" ]; then
         mkdir -p "$VSCODE_USER_DIR"
-        printf "Creating symlink for VSCode settings...\n"
+        printf "Creating symlink for VS Code settings...\n"
         ln -sf "$VSCODE_SETTINGS_SOURCE" "$VSCODE_SETTINGS_TARGET" || return 1
     else
         return 1
@@ -88,7 +87,7 @@ main() {
     setup_bare_repo || { printf "Error: Dotfiles setup failed.\n"; exit 1; }
     install_brew_packages || printf "Warning: Brewfile installation failed.\n"
     install_nodejs || printf "Warning: Node.js installation failed.\n"
-    create_vscode_symlinks || printf "Warning: VSCode symlink creation failed.\n"
+    create_vscode_symlinks || printf "Warning: VS Code symlink creation failed.\n"
     create_hushlogin
     macos_defaults_setup
     printf "Setup complete!\n"
