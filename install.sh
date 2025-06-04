@@ -42,7 +42,6 @@ install_brew_packages() {
         printf "Installing packages from Brewfile...\n"
         brew bundle --file="${BREWFILE_PATH}"
         brew cleanup --prune=all
-        rm -rf "$(brew --cache)"
     else
         return 1
     fi
@@ -69,7 +68,7 @@ create_vscode_symlinks() {
 
 create_hushlogin() {
     printf "Creating .hushlogin file...\n"
-    : >"${HOME}/.hushlogin"
+    touch "${HOME}/.hushlogin"
 }
 
 macos_defaults_setup() {
