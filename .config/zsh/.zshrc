@@ -1,59 +1,68 @@
 # Enable instant prompt
-if [[ -r "$HOME/.local/cache/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-    source "$HOME/.local/cache/p10k-instant-prompt-${(%):-%n}.zsh"
+if [[ -r "${XDG_CACHE_HOME}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+    source "${XDG_CACHE_HOME}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # Install plugin manager
-if [ ! -d "$HOME/.local/share/zap" ]; then
-    zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --keep --branch release-v1
+if [[ ! -d "${XDG_DATA_HOME}/zap" ]]; then
+    zsh <(curl -s \
+        https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) \
+        --keep --branch release-v1
 fi
 
 # Enable plugin manager
-[ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh"
+if [[ -r "${XDG_DATA_HOME}/zap/zap.zsh" ]]; then
+    source "${XDG_DATA_HOME}/zap/zap.zsh"
+fi
 
 # Plugins
 plug "romkatv/powerlevel10k"
-plug "zsh-users/zsh-syntax-highlighting"
-plug "zsh-users/zsh-autosuggestions"
-plug "Aloxaf/fzf-tab"
+plug "romkatv/zsh-defer"
+zsh-defer plug "zsh-users/zsh-syntax-highlighting"
+zsh-defer plug "zsh-users/zsh-autosuggestions"
+zsh-defer plug "Aloxaf/fzf-tab"
 
 # Completion
-fpath+="$HOME/.config/zsh/completion/"
-autoload -Uz compinit && compinit -d "$HOME/.local/cache/.zcompdump"
-zstyle ':completion:*' cache-path "$HOME/.local/cache/.zcompcache"
+fpath+=("${HOMEBREW_PREFIX}/share/zsh/site-functions")
+fpath+=("${ZDOTDIR}/completion")
+autoload -Uz compinit && compinit -d "${XDG_CACHE_HOME}/.zcompdump"
+zstyle ':completion:*' cache-path "${XDG_CACHE_HOME}/.zcompcache"
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' menu no
 
 # History
-HISTFILE="$HOME/.local/state/.zsh_history"
-HISTSIZE=3000
-SAVEHIST=$HISTSIZE
-HISTDUP=erase
-setopt hist_verify
-setopt inc_append_history
-setopt share_history
-setopt hist_ignore_dups
-setopt hist_ignore_all_dups
-setopt hist_expire_dups_first
-setopt hist_save_no_dups
-setopt hist_find_no_dups
-setopt hist_ignore_space
-setopt hist_reduce_blanks
-bindkey '^[[A' history-search-backward
-bindkey '^[[B' history-search-forward
-bindkey -v '^?' backward-delete-char
+HISTFILE="${XDG_STATE_HOME}/.zsh_history"
+HISTSIZE=5000
+SAVEHIST="${HISTSIZE}"
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_VERIFY
+
+# Keybindings
+bindkey '^[[A' 'history-search-backward'
+bindkey '^[[B' 'history-search-forward'
+bindkey -v '^?' 'backward-delete-char'
 
 # Aliases
-alias ls='ls -lah --color'
+alias dotfiles="git --git-dir=${HOME}/Developer/dotfiles --work-tree=${HOME}"
 alias tree='tree -C --dirsfirst --noreport'
+alias ls='ls -lAh --color'
 alias mkdir='mkdir -p'
 
-# Powerlevel10k
-[ -f "$HOME/.config/zsh/.p10k.zsh" ] && source "$HOME/.config/zsh/.p10k.zsh"
-
-# Homebrew
-[ -f "/opt/homebrew/bin/brew" ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+# Prompt Powerlevel10k
+if [[ -r "${ZDOTDIR}/.p10k.zsh" ]]; then
+    source "${ZDOTDIR}/.p10k.zsh"
+fi
 
 # Fast Node Manager
-[ -f "/opt/homebrew/bin/fnm" ] && eval "$(fnm env --use-on-cd --shell zsh)"
+if [[ -x "${HOMEBREW_PREFIX}/bin/fnm" ]]; then
+    eval "$(fnm env --use-on-cd --shell zsh)"
+fi
