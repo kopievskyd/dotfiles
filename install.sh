@@ -1,10 +1,10 @@
 #!/bin/sh
 
 readonly REPO_URL="https://github.com/kopievskyd/dotfiles.git"
-readonly REPO_DIR="$HOME/Developer/dotfiles"
+readonly REPO_DIR="${HOME}/Developer/dotfiles"
 readonly HOMEBREW_URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
-readonly BREWFILE_PATH="$HOME/.config/homebrew/Brewfile"
-readonly VSCODE_USER_DIR="$HOME/Library/Application Support/Code/User"
+readonly BREWFILE_PATH="${HOME}/.config/homebrew/Brewfile"
+readonly VSCODE_USER_DIR="${HOME}/Library/Application Support/Code/User"
 readonly VSCODE_SETTINGS_SOURCE="${HOME}/.vscode/settings.json"
 readonly VSCODE_SETTINGS_TARGET="${VSCODE_USER_DIR}/settings.json"
 readonly HAMMERSPOON_CONFIG_PATH="${HOME}/.config/hammerspoon/init.lua"
