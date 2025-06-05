@@ -61,11 +61,6 @@ if [[ -r "${ZDOTDIR}/.p10k.zsh" ]]; then
     source "${ZDOTDIR}/.p10k.zsh"
 fi
 
-# Fast Node Manager
-if [[ -x "${HOMEBREW_PREFIX}/bin/fnm" ]]; then
-    eval "$(fnm env --use-on-cd --shell zsh)"
-fi
-
 # Set TTY for GPG
 if [[ -t 1 ]]; then
     export GPG_TTY="$(tty)"
