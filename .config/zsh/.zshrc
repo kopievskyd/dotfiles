@@ -5,8 +5,7 @@ fi
 
 # Install plugin manager
 if [[ ! -d "${XDG_DATA_HOME}/zap" ]]; then
-    zsh <(curl -s \
-        https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) \
+    zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) \
         --keep --branch release-v1
 fi
 
@@ -47,15 +46,15 @@ setopt SHARE_HISTORY
 setopt HIST_VERIFY
 
 # Keybindings
-bindkey '^[[A' 'history-search-backward'
-bindkey '^[[B' 'history-search-forward'
-bindkey -v '^?' 'backward-delete-char'
+bindkey '^[[A' history-search-backward
+bindkey '^[[B' history-search-forward
+bindkey -v '^?' backward-delete-char
 
 # Aliases
 alias dotfiles="git --git-dir=${HOME}/Developer/dotfiles --work-tree=${HOME}"
-alias tree='tree -C --dirsfirst --noreport'
-alias ls='ls -lAh --color'
-alias mkdir='mkdir -p'
+alias tree="tree -C --dirsfirst --noreport"
+alias ls="ls -lAh --color"
+alias mkdir="mkdir -p"
 
 # Prompt Powerlevel10k
 if [[ -r "${ZDOTDIR}/.p10k.zsh" ]]; then
@@ -65,4 +64,9 @@ fi
 # Fast Node Manager
 if [[ -x "${HOMEBREW_PREFIX}/bin/fnm" ]]; then
     eval "$(fnm env --use-on-cd --shell zsh)"
+fi
+
+# Set TTY for GPG
+if [[ -t 1 ]]; then
+    export GPG_TTY="$(tty)"
 fi
