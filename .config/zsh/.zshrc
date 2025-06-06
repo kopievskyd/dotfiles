@@ -56,6 +56,12 @@ alias tree="tree -C --dirsfirst --noreport"
 alias ls="ls -lAh --color"
 alias mkdir="mkdir -p"
 
+# Add Homebrew binaries to PATH
+export PATH="${HOMEBREW_PREFIX}/bin:${PATH}"
+
+# Add Go binaries to PATH
+export PATH="${GOPATH}/bin:${PATH}"
+
 # Prompt Powerlevel10k
 if [[ -r "${ZDOTDIR}/.p10k.zsh" ]]; then
     source "${ZDOTDIR}/.p10k.zsh"
