@@ -16,3 +16,5 @@ require("lazy").setup(require("plugins"), {
 	rocks = { enabled = false },
 	change_detection = { notify = false },
 })
+
+require("lsp")

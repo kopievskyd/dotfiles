@@ -1,7 +1,7 @@
 return {
 	-- Mason
 	{
-		"williamboman/mason.nvim",
+		"mason-org/mason.nvim",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -9,10 +9,10 @@ return {
 		opts = {
 			ensure_installed = {
 				"lua-language-server",
-				"gopls",
 				"stylua",
-				"taplo",
+				"shfmt",
 				"beautysh",
+				"prettierd",
 			},
 		},
 		config = function(_, opts)
@@ -41,67 +41,17 @@ return {
 		},
 	},
 
-	-- Lspconfig
-	{
-		"neovim/nvim-lspconfig",
-		event = { "BufReadPre", "BufNewFile" },
-		opts = {
-			diagnostics = {
-				signs = false,
-				virtual_text = {
-					prefix = "●",
-					source = false,
-				},
-				update_in_insert = true,
-				severity_sort = true,
-			},
-			servers = {
-				lua_ls = {
-					settings = {
-						Lua = {
-							diagnostics = {
-								globals = { "vim" },
-							},
-						},
-					},
-				},
-				gopls = {
-					settings = {
-						gopls = {
-							analyses = {
-								shadow = true,
-							},
-							staticcheck = true,
-						},
-					},
-				},
-			},
-		},
-		config = function(_, opts)
-			local lspconfig = require("lspconfig")
-
-			if opts.diagnostics then
-				vim.diagnostic.config(opts.diagnostics)
-			end
-
-			for server, config in pairs(opts.servers) do
-				config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
-				lspconfig[server].setup(config)
-			end
-		end,
-	},
-
 	-- Formatting
 	{
 		"stevearc/conform.nvim",
-		event = { "VeryLazy" },
+		event = "VeryLazy",
 		opts = {
 			formatters_by_ft = {
 				lua = { "stylua" },
-				go = { "gopls" },
-				toml = { "taplo" },
+				json = { "prettierd" },
+				toml = { "prettierd" },
 				zsh = { "beautysh" },
-				sh = { "beautysh" },
+				sh = { "shfmt" },
 			},
 		},
 		config = function(_, opts)

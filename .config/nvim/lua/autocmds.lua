@@ -3,7 +3,7 @@ local autocmd = vim.api.nvim_create_autocmd
 -- Highlight on yank
 autocmd("TextYankPost", {
 	callback = function()
-		vim.highlight.on_yank()
+		vim.hl.on_yank()
 	end,
 })
 
@@ -48,7 +48,7 @@ autocmd("BufEnter", {
 })
 
 -- Make background transparent
-autocmd("OptionSet", {
+autocmd({ "OptionSet", "ColorScheme" }, {
 	callback = function()
 		local function apply_transparent()
 			pcall(vim.api.nvim_set_hl, 0, "Normal", { bg = "NONE", ctermbg = "NONE" })
