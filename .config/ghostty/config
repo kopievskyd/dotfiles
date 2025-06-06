@@ -1,9 +1,20 @@
+# Color theme
 theme = light:zenwritten_light,dark:zenwritten_dark
+
+# Font settings
 font-family = JetBrains Mono
 font-feature = -calt
 font-size = 14
 adjust-cell-height = 3
+
+# Window settings
 window-padding-x = 10
 unfocused-split-opacity = 1
 maximize = true
+
+# Keybindings
+keybind = control+n=goto_split:next
+keybind = control+p=goto_split:previous
+
+# Misc
 auto-update-channel = tip
