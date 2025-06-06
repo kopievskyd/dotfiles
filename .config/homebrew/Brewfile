@@ -1,17 +1,16 @@
-# Formulae (CLI Tools)
+# CLI Tools
 brew "git"
 brew "fzf"
 brew "wget"
 brew "tree"
-brew "stow"
+brew "gnupg"
 brew "ripgrep"
 brew "neovim"
-brew "gnupg"
 brew "pinentry-mac"
-brew "fnm"
+brew "node@22"
 brew "go"
 
-# Casks (Applications)
+# Applications
 cask "rectangle"
 cask "syncthing"
 cask "pika"
@@ -29,6 +28,7 @@ cask "obsidian"
 cask "ghostty@tip"
 cask "transmission"
 cask "hammerspoon"
+cask "font-jetbrains-mono"
 
 # VS Code Extensions
 vscode "pkief.material-icon-theme"
