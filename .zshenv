@@ -8,6 +8,7 @@ export XDG_CACHE_HOME="${HOME}/.local/cache"
 export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 export LESSHISTFILE="${XDG_STATE_HOME}/less/history"
 export NPM_CONFIG_CACHE="${XDG_CACHE_HOME}/npm"
+export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep/config"
 export GOPATH="${XDG_DATA_HOME}/go"
 
 # Homebrew configuration
