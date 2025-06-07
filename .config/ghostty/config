@@ -1,5 +1,5 @@
 # Color theme
-theme = light:zenwritten_light,dark:zenwritten_dark
+theme = catppuccin-mocha
 
 # Font settings
 font-family = JetBrains Mono
@@ -10,7 +10,7 @@ adjust-cell-height = 3
 # Window settings
 window-padding-x = 10
 unfocused-split-opacity = 1
-maximize = true
+window-save-state = always
 
 # Keybindings
 keybind = control+n=goto_split:next
