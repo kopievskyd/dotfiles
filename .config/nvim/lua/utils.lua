@@ -32,112 +32,74 @@ function M.toggle_netrw()
 	vim.cmd("Explore")
 end
 
----Executes a git command asynchronously
----@param args string[]
----@param cwd string
----@param callback fun(output: string|nil)
-local function git_async(args, cwd, callback)
-	local stdout = vim.loop.new_pipe(false)
-	local output = ""
-	local handle
-
-	handle = vim.loop.spawn("git", {
-		args = args,
-		cwd = cwd,
-		stdio = { nil, stdout, nil },
-	}, function(code)
-		stdout:close()
-		handle:close()
-		callback(code == 0 and output or nil)
-	end)
-
-	stdout:read_start(function(_, data)
-		if data then
-			output = output .. data
-		end
-	end)
-end
-
----Fetches git information for a buffer
----@param buf number
----@param filepath string
----@param cwd string
-local function fetch_git_info(buf, filepath, cwd)
-	git_async({ "branch", "--show-current" }, cwd, function(branch_output)
-		if not branch_output or branch_output == "" then
-			return
-		end
-
-		local branch = branch_output:gsub("%s+", "")
-
-		git_async({ "status", "--porcelain", "--untracked-files=all", "--", filepath }, cwd, function(status_output)
-			local dirty = (status_output and status_output ~= "") and "*" or ""
-			local git_info = " %#LineNr#" .. branch .. dirty .. "%*"
-
-			vim.schedule(function()
-				if vim.api.nvim_buf_is_valid(buf) then
-					pcall(vim.api.nvim_buf_set_var, buf, "git_info", git_info)
-					vim.cmd.redrawstatus()
-				end
-			end)
-		end)
-	end)
-end
-
 ---Get current buffer information
----@return {buf: number, bufname: string, filepath: string, filetype: string, cwd: string}
+---@return {bufname: string, filetype: string, filepath: string}
 local function get_buffer_info()
 	local buf = vim.api.nvim_get_current_buf()
 	local bufname = vim.api.nvim_buf_get_name(buf)
 	local filetype = vim.bo[buf].filetype
-	local filepath = bufname ~= "" and vim.fn.fnamemodify(bufname, ":p") or ""
-	local cwd = vim.loop.cwd()
+	local filepath = ""
+
+	if bufname ~= "" then
+		local root = vim.fn.getcwd()
+
+		if bufname:find(root, 1, true) == 1 then
+			local relative = bufname:sub(#root + 1):gsub("^[/\\]", "")
+			filepath = relative ~= "" and relative or vim.fn.fnamemodify(bufname, ":t")
+		else
+			filepath = bufname:gsub("^[/\\]", "")
+		end
+	end
 
 	return {
-		buf = buf,
 		bufname = bufname,
-		filepath = filepath,
 		filetype = filetype,
-		cwd = cwd,
+		filepath = filepath,
 	}
 end
 
----Updates the git information for the current buffer
----Called when a file is saved to refresh git status indicators
----Fetches branch and dirty status information to keep the winbar accurate
-function M.update_git_info()
-	local info = get_buffer_info()
+---Cached winbar content
+---@type string
+local winbar_context = ""
 
-	if info.bufname == "" then
-		return
-	end
-
-	fetch_git_info(info.buf, info.filepath, info.cwd)
-end
-
----Builds the winbar content string
+---Builds the winbar content
 ---@return string
 function M.build_winbar()
-	local info = get_buffer_info()
-
-	-- Set icon based on buffer type and state
-	local icon = (vim.bo.modified and " ")
-		or ((info.filetype == "netrw" and "  ") or (info.bufname == "" and " ") or " ")
-
-	-- Try to get cached git info
-	local git_info = ""
-	pcall(function()
-		git_info = vim.api.nvim_buf_get_var(info.buf, "git_info")
-	end)
-
-	-- If no git info and not already updating, fetch it
-	if git_info == "" and info.bufname ~= "" then
-		vim.schedule(function()
-			fetch_git_info(info.buf, info.filepath, info.cwd)
-		end)
+	if vim.bo.buftype ~= "" or vim.api.nvim_win_get_config(0).relative ~= "" then
+		return winbar_context
 	end
 
-	return icon .. "%t" .. (git_info or "")
+	local icons = {
+		explorer = "󰝰 ",
+		folder = "󰉋 ",
+		no_name = "󰈤 ",
+		default = "󰧮 ",
+		modified = "󰈙 ",
+	}
+
+	local info = get_buffer_info()
+	local icon = icons.default
+
+	if info.filetype == "netrw" then
+		winbar_context = icons.explorer .. "%t"
+		return winbar_context
+	elseif info.bufname == "" or info.filepath == "" then
+		winbar_context = icons.no_name .. "%t"
+		return winbar_context
+	elseif vim.bo.modified then
+		icon = icons.modified
+	end
+
+	local result = {}
+	local parts = vim.split(info.filepath, "/")
+
+	for i, part in ipairs(parts) do
+		local part_icon = (i == #parts) and icon or icons.folder
+		table.insert(result, part_icon .. part)
+	end
+
+	winbar_context = table.concat(result, " › ")
+	return winbar_context
 end
 
 return M

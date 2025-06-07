@@ -1,4 +1,13 @@
 return {
+	-- Colorscheme
+	{
+		"catppuccin/nvim",
+		name = "catppuccin",
+		config = function()
+			vim.cmd.colorscheme("catppuccin")
+		end,
+	},
+
 	-- Mason
 	{
 		"mason-org/mason.nvim",
@@ -9,6 +18,7 @@ return {
 		opts = {
 			ensure_installed = {
 				"lua-language-server",
+				"gopls",
 				"stylua",
 				"shfmt",
 				"beautysh",
@@ -44,7 +54,7 @@ return {
 	-- Formatting
 	{
 		"stevearc/conform.nvim",
-		event = "VeryLazy",
+		event = { "BufReadPre", "BufNewFile" },
 		opts = {
 			formatters_by_ft = {
 				lua = { "stylua" },
@@ -62,8 +72,8 @@ return {
 	-- Surround
 	{
 		"kylechui/nvim-surround",
-		version = "*",
 		event = "VeryLazy",
+		version = "*",
 		config = true,
 	},
 
