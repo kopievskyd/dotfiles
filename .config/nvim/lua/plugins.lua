@@ -1,4 +1,13 @@
 return {
+	-- Colorscheme
+	{
+		"catppuccin/nvim",
+		name = "catppuccin",
+		config = function()
+			vim.cmd.colorscheme("catppuccin")
+		end,
+	},
+
 	-- Mason
 	{
 		"mason-org/mason.nvim",
