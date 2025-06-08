@@ -30,7 +30,7 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:*' fzf-flags \
-    --no-info --no-separator --pointer='' --marker='' --color=fg:15,bg+:8
+    --no-info --no-separator --pointer='' --marker='  ' --color=fg:15,bg+:8
 
 # History
 HISTFILE="${XDG_STATE_HOME}/.zsh_history"
