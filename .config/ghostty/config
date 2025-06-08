@@ -12,6 +12,8 @@ adjust-cell-height = 3
 window-padding-x = 10
 unfocused-split-opacity = 1
 window-save-state = always
+macos-titlebar-proxy-icon = hidden
+title = " "
 
 # Keybindings
 keybind = control+n=goto_split:next
