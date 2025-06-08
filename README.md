@@ -12,7 +12,7 @@ This repository contains my personal configuration files for macOS. It uses Home
 
 ```
 .
-├── .config/
+├── .config/                # Configuration files
 │   ├── ghostty/            # Ghostty terminal settings
 │   ├── git/                # Git configuration
 │   ├── hammerspoon/        # Hammerspoon scripts
@@ -21,6 +21,7 @@ This repository contains my personal configuration files for macOS. It uses Home
 │   ├── ripgrep/            # Ripgrep configuration
 │   └── zsh/                # Zsh configuration
 ├── .vscode/                # VS Code settings
+├── assets/                 # Screenshots and images
 ├── .zshenv                 # Environment variables
 ├── LICENSE                 # License file
 ├── README.md               # This file
