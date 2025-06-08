@@ -36,6 +36,9 @@ Install everything with a single command:
 curl -fsSL https://raw.githubusercontent.com/kopievskyd/dotfiles/refs/heads/main/install.sh | sh
 ```
 
+## XDG Compliance
+These dotfiles follow the [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/latest/) to keep the home directory clean and organized. All configuration files are properly structured according to these standards.
+
 ## Package Management
 
 [Homebrew](https://brew.sh/) is used as the primary package manager, with [Homebrew Bundle](https://docs.brew.sh/Brew-Bundle-and-Brewfile) for declarative management of packages, applications, and VS Code extensions.
@@ -43,7 +46,7 @@ curl -fsSL https://raw.githubusercontent.com/kopievskyd/dotfiles/refs/heads/main
 A specific environment variable defined in `.zshenv` allows you to run `brew bundle` from anywhere, automatically using the correct Brewfile from your config directory:
 
 ```sh
-export HOMEBREW_BUNDLE_FILE="$HOME/.config/homebrew/Brewfile"
+export HOMEBREW_BUNDLE_FILE="${XDG_CONFIG_HOME}/homebrew/Brewfile"
 ```
 
 ## Zsh Configuration
