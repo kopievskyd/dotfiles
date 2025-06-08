@@ -1,5 +1,6 @@
 # Color theme
-theme = catppuccin-mocha
+theme = catppuccin-frappe
+background = 1f1f2c
 
 # Font settings
 font-family = JetBrains Mono
