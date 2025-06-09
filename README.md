@@ -33,7 +33,7 @@ This repository contains my personal configuration files for macOS. It uses Home
 Install everything with a single command:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/kopievskyd/dotfiles/refs/heads/main/install.sh | bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/kopievskyd/dotfiles/refs/heads/main/install.sh)"
 ```
 
 > [!NOTE]
