@@ -33,8 +33,11 @@ This repository contains my personal configuration files for macOS. It uses Home
 Install everything with a single command:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/kopievskyd/dotfiles/refs/heads/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/kopievskyd/dotfiles/refs/heads/main/install.sh | bash
 ```
+
+> [!NOTE]
+> This will download and execute a script. Inspect the [install.sh](install.sh) before running.
 
 ## XDG Compliance
 These dotfiles follow the [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/latest/) to keep the home directory clean and organized. All configuration files are properly structured according to these standards.
@@ -130,6 +133,6 @@ Leader key is set to `,` with the following mappings:
 
 ## License
 
-Creative Commons Zero v1.0 Universal. See the [LICENSE](https://github.com/kopievskyd/dotfiles/blob/main/LICENSE) file for details.
+Creative Commons Zero v1.0 Universal. See the [LICENSE](LICENSE) file for details.
 
 </samp>
