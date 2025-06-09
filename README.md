@@ -37,7 +37,7 @@ curl -fsSL https://raw.githubusercontent.com/kopievskyd/dotfiles/refs/heads/main
 ```
 
 > [!NOTE]
-> This will download and execute a script. Inspect the [install.sh](install.sh) before running.
+> This download and execute a script. Inspect the [install.sh](install.sh) before running.
 
 ## XDG Compliance
 These dotfiles follow the [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/latest/) to keep the home directory clean and organized. All configuration files are properly structured according to these standards.
