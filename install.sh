@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 readonly REPO_URL="https://github.com/kopievskyd/dotfiles.git"
 readonly REPO_DIR="${HOME}/Developer/dotfiles"
@@ -14,14 +14,13 @@ _dotfiles() {
 }
 
 setup_bare_repo() {
-    if [ ! -d "${REPO_DIR}" ]; then
+    if [[ ! -d "${REPO_DIR}" ]]; then
         git clone --bare "${REPO_URL}" "${REPO_DIR}" || return 1
     else
-        printf "Dotfiles repository already exists. Fetching latest changes...\n"
         _dotfiles fetch || return 1
     fi
 
-    printf "Checkout dotfiles...\n"
+    printf "Checking out dotfiles...\n"
     _dotfiles config core.sparseCheckout true
     _dotfiles sparse-checkout init --no-cone
     _dotfiles sparse-checkout set '/*' '!assets/' '!LICENSE' '!README.md' '!install.sh'
@@ -38,17 +37,17 @@ install_homebrew() {
 }
 
 install_brew_packages() {
-    if [ -f "${BREWFILE_PATH}" ]; then
+    if [[ -f "${BREWFILE_PATH}" ]]; then
         printf "Installing packages from Brewfile...\n"
         brew bundle --file="${BREWFILE_PATH}"
-        brew cleanup --prune=all
+        brew cleanup --prune=all >/dev/null
     else
         return 1
     fi
 }
 
 create_vscode_symlinks() {
-    if [ -f "${VSCODE_SETTINGS_SOURCE}" ]; then
+    if [[ -f "${VSCODE_SETTINGS_SOURCE}" ]]; then
         mkdir -p "${VSCODE_USER_DIR}"
         printf "Creating symlink for VS Code settings...\n"
         ln -sf "${VSCODE_SETTINGS_SOURCE}" "${VSCODE_SETTINGS_TARGET}" || return 1
@@ -69,14 +68,14 @@ macos_defaults_setup() {
     defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
     defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
     defaults write com.apple.dock autohide-delay -float 0
-    killall Dock
+    killall Dock || true
 }
 
 main() {
     install_homebrew
-    setup_bare_repo || { printf "Error: Dotfiles setup failed.\n"; exit 1; }
-    install_brew_packages || printf "Warning: Brewfile installation failed.\n"
-    create_vscode_symlinks || printf "Warning: VS Code symlink creation failed.\n"
+    setup_bare_repo || { printf "Error: Dotfiles setup failed.\n" >&2; exit 1; }
+    install_brew_packages || printf "Warning: Brewfile installation failed.\n" >&2
+    create_vscode_symlinks || printf "Warning: VS Code symlink creation failed.\n" >&2
     create_hushlogin
     macos_defaults_setup
     printf "Setup complete!\n"
