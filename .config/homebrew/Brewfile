@@ -28,7 +28,6 @@ cask "obsidian"
 cask "ghostty@tip"
 cask "transmission"
 cask "hammerspoon"
-cask "font-jetbrains-mono"
 
 # VS Code Extensions
 vscode "pkief.material-icon-theme"
