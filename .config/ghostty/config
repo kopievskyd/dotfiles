@@ -3,8 +3,7 @@ theme = catppuccin-frappe
 background = 1f1f2c
 
 # Font settings
-font-family = JetBrains Mono
-font-feature = -calt
+font-family = JetBrains Mono NL
 font-size = 14
 adjust-cell-height = 3
 
