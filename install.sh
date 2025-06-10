@@ -43,51 +43,39 @@ install_homebrew() {
 }
 
 install_brew_packages() {
-    if [[ -f "${BREWFILE_PATH}" ]]; then
-        printf "Installing packages from Brewfile...\n"
-        brew bundle --file="${BREWFILE_PATH}"
-        brew cleanup --prune=all >/dev/null
-    else
-        return 1
-    fi
+    [[ -f "${BREWFILE_PATH}" ]] || return 1
+    printf "Installing packages from Brewfile...\n"
+    brew bundle --file="${BREWFILE_PATH}"
+    brew cleanup --prune=all >/dev/null
 }
 
 install_jetbrains_mono() {
-    [[ -f "$FONT_DIR/JetBrainsMono-Regular.ttf" ]] && return 0
+    [[ -f "${FONT_DIR}/JetBrainsMono-Regular.ttf" ]] && return 0
 
     printf "Installing JetBrains Mono...\n"
-
+    local font_url temp_dir ttf_dir
     local api_url="https://api.github.com/repos/JetBrains/JetBrainsMono/releases/latest"
-    local font_url
     font_url=$(curl -fsSL "$api_url" |
         grep -o '"browser_download_url": *"[^"]*\.zip"' |
-        head -1 |
-        cut -d'"' -f4)
+        head -1 | cut -d'"' -f4)
     [[ -z "${font_url}" ]] && return 1
 
-    local temp_dir
     temp_dir=$(mktemp -d)
-    trap "rm -rf '${temp_dir}'" RETURN
-
+    trap "rm -rf '${temp_dir}'" EXIT
     curl -fL -o "${temp_dir}/JetBrainsMono.zip" "${font_url}" &>/dev/null || return 1
     unzip -q "${temp_dir}/JetBrainsMono.zip" -d "${temp_dir}" &>/dev/null || return 1
-
-    local ttf_dir
     ttf_dir=$(find "${temp_dir}" -type d -iname "ttf" | head -n 1)
     [[ -z "${ttf_dir}" ]] && return 1
 
     mkdir -p "${FONT_DIR}"
-    cp "$ttf_dir"/*.ttf "$FONT_DIR/" || return 1
+    cp "$ttf_dir"/*.ttf "${FONT_DIR}/" || return 1
 }
 
 create_vscode_symlinks() {
-    if [[ -f "${VSCODE_SETTINGS_SOURCE}" ]]; then
-        mkdir -p "${VSCODE_USER_DIR}"
-        printf "Creating symlink for VS Code settings...\n"
-        ln -sf "${VSCODE_SETTINGS_SOURCE}" "${VSCODE_SETTINGS_TARGET}" || return 1
-    else
-        return 1
-    fi
+    [[ -f "${VSCODE_SETTINGS_SOURCE}" ]] || return 1
+    mkdir -p "${VSCODE_USER_DIR}"
+    printf "Creating symlink for VS Code settings...\n"
+    ln -sf "${VSCODE_SETTINGS_SOURCE}" "${VSCODE_SETTINGS_TARGET}" || return 1
 }
 
 create_hushlogin_file() {
