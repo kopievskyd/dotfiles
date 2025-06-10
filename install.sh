@@ -67,7 +67,7 @@ install_jetbrains_mono() {
 
     local temp_dir
     temp_dir=$(mktemp -d)
-    trap "rm -rf '${temp_dir}'; printf 'Deleted %s\n' '${temp_dir}'" RETURN
+    trap "rm -rf '${temp_dir}'" RETURN
 
     curl -fL -o "${temp_dir}/JetBrainsMono.zip" "${font_url}" &>/dev/null || return 1
     unzip -q "${temp_dir}/JetBrainsMono.zip" -d "${temp_dir}" &>/dev/null || return 1
