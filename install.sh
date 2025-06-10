@@ -1,38 +1,43 @@
 #!/bin/bash
 
+set -u
+
 readonly REPO_URL="https://github.com/kopievskyd/dotfiles.git"
+readonly HOMEBREW_URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
+
 readonly REPO_DIR="${HOME}/Developer/dotfiles"
 readonly FONT_DIR="${HOME}/Library/Fonts"
-readonly HOMEBREW_URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
 readonly BREWFILE_PATH="${HOME}/.config/homebrew/Brewfile"
 readonly VSCODE_USER_DIR="${HOME}/Library/Application Support/Code/User"
 readonly VSCODE_SETTINGS_SOURCE="${HOME}/.vscode/settings.json"
 readonly VSCODE_SETTINGS_TARGET="${VSCODE_USER_DIR}/settings.json"
 readonly HAMMERSPOON_CONFIG_PATH="${HOME}/.config/hammerspoon/init.lua"
 
-_dotfiles() {
+dotfiles() {
     git --git-dir="${REPO_DIR}" --work-tree="${HOME}" "$@"
 }
 
 setup_bare_repo() {
     if [[ ! -d "${REPO_DIR}" ]]; then
-        git clone --bare "${REPO_URL}" "${REPO_DIR}" || return 1
+        printf "Cloning into bare repository...\n"
+        git clone --bare --quiet "${REPO_URL}" "${REPO_DIR}" || return 1
     else
-        _dotfiles fetch || return 1
+        printf "Fetching updates for existing bare repository...\n"
+        dotfiles fetch --quiet || return 1
     fi
 
     printf "Checking out dotfiles...\n"
-    _dotfiles config core.sparseCheckout true
-    _dotfiles sparse-checkout init --no-cone
-    _dotfiles sparse-checkout set '/*' '!assets/' '!LICENSE' '!README.md' '!install.sh'
-    _dotfiles config status.showUntrackedFiles no
-    _dotfiles checkout || return 1
+    dotfiles config core.sparseCheckout true
+    dotfiles sparse-checkout init --no-cone
+    dotfiles sparse-checkout set '/*' '!assets/' '!LICENSE' '!README.md' '!install.sh'
+    dotfiles config status.showUntrackedFiles no
+    dotfiles checkout || return 1
 }
 
 install_homebrew() {
     if ! command -v brew >/dev/null 2>&1; then
         printf "Installing Homebrew...\n"
-        /bin/bash -c "$(curl -fsSL "${HOMEBREW_URL}")"
+        bash -c "$(curl -fsSL "${HOMEBREW_URL}")"
         eval "$(/opt/homebrew/bin/brew shellenv)"
     fi
 }
@@ -48,7 +53,9 @@ install_brew_packages() {
 }
 
 install_jetbrains_mono() {
-    printf "Installing JetBrains Mono font...\n"
+    [[ -f "$FONT_DIR/JetBrainsMono-Regular.ttf" ]] && return 0
+
+    printf "Installing JetBrains Mono...\n"
 
     local api_url="https://api.github.com/repos/JetBrains/JetBrainsMono/releases/latest"
     local font_url
@@ -60,10 +67,10 @@ install_jetbrains_mono() {
 
     local temp_dir
     temp_dir=$(mktemp -d)
-    trap 'rm -rf "${temp_dir}"' RETURN
+    trap "rm -rf '${temp_dir}'" RETURN
 
-    curl -fL -o "${temp_dir}/JetBrainsMono.zip" "${font_url}" || return 1
-    unzip -q "${temp_dir}/JetBrainsMono.zip" -d "${temp_dir}" || return 1
+    curl -fL -o "${temp_dir}/JetBrainsMono.zip" "${font_url}" &>/dev/null || return 1
+    unzip -q "${temp_dir}/JetBrainsMono.zip" -d "${temp_dir}" &>/dev/null || return 1
 
     local ttf_dir
     ttf_dir=$(find "${temp_dir}" -type d -iname "ttf" | head -n 1)
@@ -83,7 +90,7 @@ create_vscode_symlinks() {
     fi
 }
 
-create_hushlogin() {
+create_hushlogin_file() {
     printf "Creating .hushlogin file...\n"
     touch "${HOME}/.hushlogin"
 }
@@ -104,7 +111,7 @@ main() {
     install_brew_packages || printf "Warning: Brewfile installation failed.\n" >&2
     install_jetbrains_mono || printf "Warning: JetBrains Mono installation failed.\n" >&2
     create_vscode_symlinks || printf "Warning: VS Code symlink creation failed.\n" >&2
-    create_hushlogin
+    create_hushlogin_file
     macos_defaults_setup
     printf "Setup complete!\n"
 }
