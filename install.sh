@@ -37,7 +37,7 @@ setup_bare_repo() {
 }
 
 install_homebrew() {
-    if ! command -v brew >/dev/null 2>&1; then
+    if ! command -v brew &>/dev/null; then
         printf "Installing Homebrew...\n"
         bash -c "$(curl -fsSL "${HOMEBREW_URL}")"
         eval "$("${HOMEBREW_PATH}" shellenv)"
@@ -48,7 +48,7 @@ install_brew_packages() {
     [[ -f "${BREWFILE_PATH}" ]] || return 1
     printf "Installing packages from Brewfile...\n"
     brew bundle --file="${BREWFILE_PATH}"
-    brew cleanup --prune=all >/dev/null
+    brew cleanup --prune=all &>/dev/null
 }
 
 install_jetbrains_mono() {
@@ -64,7 +64,7 @@ install_jetbrains_mono() {
     temp_dir=$(mktemp -d)
     trap "rm -rf '${temp_dir}'" EXIT
     curl -fL -o "${temp_dir}/JetBrainsMono.zip" "${font_url}" &>/dev/null || return 1
-    unzip -q "${temp_dir}/JetBrainsMono.zip" -d "${temp_dir}" &>/dev/null || return 1
+    unzip -q "${temp_dir}/JetBrainsMono.zip" -d "${temp_dir}" || return 1
     ttf_dir=$(find "${temp_dir}" -type d -iname "ttf" | head -n 1)
     [[ -z "${ttf_dir}" ]] && return 1
 
