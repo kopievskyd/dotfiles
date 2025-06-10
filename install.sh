@@ -4,9 +4,11 @@ set -u
 
 readonly REPO_URL="https://github.com/kopievskyd/dotfiles.git"
 readonly HOMEBREW_URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
+readonly FONT_API_URL="https://api.github.com/repos/JetBrains/JetBrainsMono/releases/latest"
 
 readonly REPO_DIR="${HOME}/Developer/dotfiles"
 readonly FONT_DIR="${HOME}/Library/Fonts"
+readonly HOMEBREW_PATH="/opt/homebrew/bin/brew"
 readonly BREWFILE_PATH="${HOME}/.config/homebrew/Brewfile"
 readonly VSCODE_USER_DIR="${HOME}/Library/Application Support/Code/User"
 readonly VSCODE_SETTINGS_SOURCE="${HOME}/.vscode/settings.json"
@@ -38,7 +40,7 @@ install_homebrew() {
     if ! command -v brew >/dev/null 2>&1; then
         printf "Installing Homebrew...\n"
         bash -c "$(curl -fsSL "${HOMEBREW_URL}")"
-        eval "$(/opt/homebrew/bin/brew shellenv)"
+        eval "$("${HOMEBREW_PATH}" shellenv)"
     fi
 }
 
@@ -54,8 +56,7 @@ install_jetbrains_mono() {
 
     printf "Installing JetBrains Mono...\n"
     local font_url temp_dir ttf_dir
-    local api_url="https://api.github.com/repos/JetBrains/JetBrainsMono/releases/latest"
-    font_url=$(curl -fsSL "$api_url" |
+    font_url=$(curl -fsSL "${FONT_API_URL}" |
         grep -o '"browser_download_url": *"[^"]*\.zip"' |
         head -1 | cut -d'"' -f4)
     [[ -z "${font_url}" ]] && return 1
@@ -68,7 +69,7 @@ install_jetbrains_mono() {
     [[ -z "${ttf_dir}" ]] && return 1
 
     mkdir -p "${FONT_DIR}"
-    cp "$ttf_dir"/*.ttf "${FONT_DIR}/" || return 1
+    cp "${ttf_dir}"/*.ttf "${FONT_DIR}/" || return 1
 }
 
 create_vscode_symlinks() {
