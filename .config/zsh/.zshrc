@@ -61,6 +61,9 @@ alias mkdir="mkdir -p"
 # Add Homebrew binaries to PATH
 export PATH="${HOMEBREW_PREFIX}/bin:${PATH}"
 
+# Add mise shims to PATH
+export PATH="${XDG_DATA_HOME}/mise/shims:$PATH"
+
 # Add Go binaries to PATH
 export PATH="${GOPATH}/bin:${PATH}"
 
