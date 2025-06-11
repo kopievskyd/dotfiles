@@ -7,8 +7,6 @@ brew "gnupg"
 brew "ripgrep"
 brew "neovim"
 brew "pinentry-mac"
-brew "node@22"
-brew "go"
 
 # Applications
 cask "rectangle"
