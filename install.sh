@@ -5,6 +5,7 @@ set -u
 readonly REPO_URL="https://github.com/kopievskyd/dotfiles.git"
 readonly HOMEBREW_URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
 readonly FONT_API_URL="https://api.github.com/repos/JetBrains/JetBrainsMono/releases/latest"
+readonly MISE_URL="https://mise.run"
 
 readonly REPO_DIR="${HOME}/Developer/dotfiles"
 readonly FONT_DIR="${HOME}/Library/Fonts"
@@ -49,6 +50,16 @@ install_brew_packages() {
     printf "Installing packages from Brewfile...\n"
     brew bundle --file="${BREWFILE_PATH}"
     brew cleanup --prune=all &>/dev/null
+}
+
+install_dev_tools() {
+    if ! command -v mise &>/dev/null; then
+        printf "Installing mise...\n"
+        sh -c "$(curl -fsSL "${MISE_URL}")" &>/dev/null
+    fi
+
+    printf "Installing development tools...\n"
+    mise install || return 1
 }
 
 install_jetbrains_mono() {
@@ -98,6 +109,7 @@ main() {
     install_homebrew
     setup_bare_repo || { printf "Error: Dotfiles setup failed.\n" >&2; exit 1; }
     install_brew_packages || printf "Warning: Brewfile installation failed.\n" >&2
+    install_dev_tools || printf "Warning: Development tools installation failed.\n" >&2
     install_jetbrains_mono || printf "Warning: JetBrains Mono installation failed.\n" >&2
     create_vscode_symlinks || printf "Warning: VS Code symlink creation failed.\n" >&2
     create_hushlogin_file
