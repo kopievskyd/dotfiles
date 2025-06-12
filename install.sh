@@ -26,7 +26,7 @@ setup_bare_repo() {
         git clone --bare --quiet "${REPO_URL}" "${REPO_DIR}" || return 1
     else
         printf "Fetching updates for existing bare repository...\n"
-        dotfiles fetch --quiet || return 1
+        dotfiles pull --rebase --autostash --quiet || return 1
     fi
 
     printf "Checking out dotfiles...\n"
