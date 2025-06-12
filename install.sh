@@ -55,7 +55,7 @@ install_brew_packages() {
 install_dev_tools() {
     if ! command -v mise &>/dev/null; then
         printf "Installing mise...\n"
-        sh -c "$(curl -fsSL "${MISE_URL}")" &>/dev/null
+        brew install mise &>/dev/null
     fi
 
     printf "Installing development tools...\n"
