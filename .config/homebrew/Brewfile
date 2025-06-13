@@ -28,6 +28,9 @@ cask "ghostty@tip"
 cask "transmission"
 cask "hammerspoon"
 
+# Fonts
+cask "font-source-sans-3"
+
 # VS Code Extensions
 vscode "pkief.material-icon-theme"
 vscode "usernamehw.errorlens"
