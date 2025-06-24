@@ -1,3 +1,7 @@
+-- Add Mason bin to PATH
+vim.env.PATH = vim.fn.stdpath("data") .. "/mason/bin" .. ":" .. vim.env.PATH
+
+-- Language server configurations
 local servers = {
 	gopls = {
 		cmd = { "gopls" },
@@ -13,7 +17,7 @@ local servers = {
 	lua_ls = {
 		cmd = { "lua-language-server" },
 		filetypes = { "lua" },
-		root_markers = { ".luarc.json", ".luarc.jsonc", "stylua.toml", ".git" },
+		root_markers = { ".luarc.json", "stylua.toml", ".git" },
 		settings = {
 			Lua = {
 				diagnostics = {
@@ -24,21 +28,26 @@ local servers = {
 	},
 }
 
-local capabilities = require("blink.cmp").get_lsp_capabilities()
+-- Ensures that all listed servers are installed via Mason
+vim.schedule(function()
+	require("utils").lsp_ensure_installed(servers)
+end)
 
+-- Register each server configuration
 for name, config in pairs(servers) do
-	config.capabilities = capabilities
 	vim.lsp.config[name] = config
 end
 
+-- Enable all configured LSP servers
+vim.lsp.enable(vim.tbl_keys(servers))
+
+-- Configure LSP diagnostics display
 vim.diagnostic.config({
 	signs = false,
 	virtual_text = {
-		prefix = "●",
+		prefix = "■",
 		source = false,
 	},
 	update_in_insert = true,
 	severity_sort = true,
 })
-
-vim.lsp.enable(vim.tbl_keys(servers))

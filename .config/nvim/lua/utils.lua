@@ -16,7 +16,10 @@ end
 ---If LSP formatting is available but conform formatter isn't, falls back to LSP
 ---@see https://github.com/stevearc/conform.nvim
 function M.format_buffer()
-	require("conform").format({ async = true, lsp_fallback = true })
+	local loaded, conform = pcall(require, "conform")
+	if loaded then
+		conform.format({ async = true, lsp_fallback = true })
+	end
 end
 
 ---Toggles the netrw file explorer
@@ -33,18 +36,17 @@ function M.toggle_netrw()
 end
 
 ---Get current buffer information
----@return {bufname: string, filetype: string, filepath: string}
+---@return { bufname: string, filetype: string, filepath: string }
 local function get_buffer_info()
+	local cwd = vim.fn.getcwd()
 	local buf = vim.api.nvim_get_current_buf()
 	local bufname = vim.api.nvim_buf_get_name(buf)
 	local filetype = vim.bo[buf].filetype
 	local filepath = ""
 
 	if bufname ~= "" then
-		local root = vim.fn.getcwd()
-
-		if bufname:find(root, 1, true) == 1 then
-			local relative = bufname:sub(#root + 1):gsub("^[/\\]", "")
+		if bufname:find(cwd, 1, true) == 1 then
+			local relative = bufname:sub(#cwd + 1):gsub("^[/\\]", "")
 			filepath = relative ~= "" and relative or vim.fn.fnamemodify(bufname, ":t")
 		else
 			filepath = bufname:gsub("^[/\\]", "")
@@ -58,48 +60,82 @@ local function get_buffer_info()
 	}
 end
 
----Cached winbar content
----@type string
-local winbar_context = ""
-
----Builds the winbar content
----@return string
-function M.build_winbar()
-	if vim.bo.buftype ~= "" or vim.api.nvim_win_get_config(0).relative ~= "" then
-		return winbar_context
-	end
-
-	local icons = {
-		explorer = "󰝰 ",
-		folder = "󰉋 ",
-		no_name = "󰈤 ",
-		default = "󰧮 ",
-		modified = "󰈙 ",
-	}
-
+---Builds a custom terminal title
+---@return string title
+function M.build_title()
 	local info = get_buffer_info()
-	local icon = icons.default
+	local modified = vim.bo.modified and " [+]" or ""
 
 	if info.filetype == "netrw" then
-		winbar_context = icons.explorer .. "%t"
-		return winbar_context
+		return "%t"
 	elseif info.bufname == "" or info.filepath == "" then
-		winbar_context = icons.no_name .. "%t"
-		return winbar_context
-	elseif vim.bo.modified then
-		icon = icons.modified
+		return "[No Name]"
 	end
 
-	local result = {}
-	local parts = vim.split(info.filepath, "/")
+	return info.filepath .. modified .. " - nvim"
+end
 
-	for i, part in ipairs(parts) do
-		local part_icon = (i == #parts) and icon or icons.folder
-		table.insert(result, part_icon .. part)
+---Starts an LSP server
+---@param name string
+---@param config table<string, any>
+local function lsp_start(name, config)
+	local clients = vim.lsp.get_clients({ name = name })
+	if #clients == 0 then
+		vim.lsp.start({
+			name = name,
+			cmd = config.cmd,
+			root_dir = vim.fs.root(0, config.root_markers),
+			settings = config.settings,
+		})
 	end
+end
 
-	winbar_context = table.concat(result, " › ")
-	return winbar_context
+---Automatically installs and starts LSP servers through Mason
+---@param servers table<string, table>
+function M.lsp_ensure_installed(servers)
+	local loaded, registry = pcall(require, "mason-registry")
+	if loaded then
+		registry.refresh(function()
+			for name, config in pairs(servers) do
+				local ok, pkg = pcall(registry.get_package, config.cmd[1])
+				if ok and not pkg:is_installed() then
+					pkg:once("install:success", function()
+						vim.schedule(function()
+							vim.notify(name .. " installed", vim.log.levels.INFO)
+							if vim.tbl_contains(config.filetypes, vim.bo.filetype) then
+								lsp_start(name, config)
+							end
+						end)
+					end)
+					pkg:install()
+				end
+			end
+		end)
+	end
+end
+
+---Automatically installs formatters through Mason
+---@param formatters table<string, string[]>
+function M.formatters_ensure_installed(formatters)
+	local loaded, registry = pcall(require, "mason-registry")
+	if loaded then
+		registry.refresh(function()
+			for _, formatter in pairs(formatters) do
+				local name = formatter[1]
+				local ok, pkg = pcall(registry.get_package, name)
+				if ok and not pkg:is_installed() then
+					pkg:once("install:success", function()
+						vim.schedule(function()
+							vim.notify(name .. " installed", vim.log.levels.INFO)
+						end)
+					end)
+					pcall(function()
+						pkg:install()
+					end)
+				end
+			end
+		end)
+	end
 end
 
 return M

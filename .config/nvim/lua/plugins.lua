@@ -1,34 +1,24 @@
 return {
 	-- Colorscheme
 	{
-		"catppuccin/nvim",
-		name = "catppuccin",
-		config = function()
-			vim.cmd.colorscheme("catppuccin-frappe")
+		"webhooked/kanso.nvim",
+		init = function()
+			vim.cmd.colorscheme("kanso-ink")
 		end,
 	},
 
 	-- Mason
 	{
 		"mason-org/mason.nvim",
-		event = { "BufReadPre", "BufNewFile" },
-		dependencies = {
-			"WhoIsSethDaniel/mason-tool-installer.nvim",
+		cmd = {
+			"Mason",
+			"MasonUpdate",
+			"MasonInstall",
+			"MasonUninstall",
+			"MasonUninstallAll",
 		},
-		opts = {
-			ensure_installed = {
-				"lua-language-server",
-				"gopls",
-				"stylua",
-				"shfmt",
-				"beautysh",
-				"prettierd",
-			},
-		},
-		config = function(_, opts)
-			require("mason").setup()
-			require("mason-tool-installer").setup(opts)
-		end,
+		lazy = true,
+		opts = {},
 	},
 
 	-- Completion
@@ -54,7 +44,7 @@ return {
 	-- Formatting
 	{
 		"stevearc/conform.nvim",
-		event = { "BufReadPre", "BufNewFile" },
+		cmd = "ConformInfo",
 		opts = {
 			formatters_by_ft = {
 				lua = { "stylua" },
@@ -66,7 +56,19 @@ return {
 		},
 		config = function(_, opts)
 			require("conform").setup(opts)
+			require("utils").formatters_ensure_installed(opts.formatters_by_ft)
 		end,
+	},
+
+	-- Indent guides
+	{
+		"folke/snacks.nvim",
+		opts = {
+			indent = {
+				animate = { enabled = false },
+				scope = { enabled = false },
+			},
+		},
 	},
 
 	-- Surround
@@ -74,7 +76,7 @@ return {
 		"kylechui/nvim-surround",
 		event = "VeryLazy",
 		version = "*",
-		config = true,
+		opts = {},
 	},
 
 	-- Autopairs
@@ -82,14 +84,14 @@ return {
 		"echasnovski/mini.pairs",
 		event = "InsertEnter",
 		version = false,
-		config = true,
+		opts = {},
 	},
 
 	-- Picker
 	{
 		"echasnovski/mini.pick",
-		event = "VeryLazy",
+		cmd = "Pick",
 		version = false,
-		config = true,
+		opts = {},
 	},
 }
