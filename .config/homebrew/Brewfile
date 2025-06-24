@@ -11,7 +11,7 @@ brew "pinentry-mac"
 
 # Applications
 cask "rectangle"
-cask "syncthing"
+cask "syncthing-app"
 cask "pika"
 cask "domzilla-caffeine"
 cask "pearcleaner"
@@ -24,7 +24,7 @@ cask "brave-browser"
 cask "firefox"
 cask "figma"
 cask "obsidian"
-cask "kitty"
+cask "kitty@nightly"
 cask "transmission"
 cask "hammerspoon"
 
