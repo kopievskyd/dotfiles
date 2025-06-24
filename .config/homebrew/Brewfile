@@ -24,7 +24,7 @@ cask "brave-browser"
 cask "firefox"
 cask "figma"
 cask "obsidian"
-cask "ghostty@tip"
+cask "kitty"
 cask "transmission"
 cask "hammerspoon"
 
