@@ -31,6 +31,7 @@ cask "hammerspoon"
 # Fonts
 cask "font-source-sans-3"
 cask "font-ibm-plex-mono"
+cask "font-iosevka-ss15"
 
 # VS Code Extensions
 vscode "pkief.material-icon-theme"
