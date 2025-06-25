@@ -72,7 +72,7 @@ function M.build_title()
 		return "[No Name]"
 	end
 
-	return info.filepath .. modified .. " - nvim"
+	return info.filepath .. modified
 end
 
 ---Starts an LSP server

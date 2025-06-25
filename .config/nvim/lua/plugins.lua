@@ -2,8 +2,24 @@ return {
 	-- Colorscheme
 	{
 		"webhooked/kanso.nvim",
+		opts = {
+			colors = {
+				palette = {
+					zen0 = "#0e0e0e",
+					zen1 = "#1f2022",
+					zen2 = "#262729",
+					zen3 = "#3c3d41",
+
+					inkBlack0 = "#181819",
+					inkBlack1 = "#212124",
+					inkBlack2 = "#262729",
+					inkBlack3 = "#3c3d41",
+					inkBlack4 = "#4e4f54",
+				},
+			},
+		},
 		init = function()
-			vim.cmd.colorscheme("kanso-ink")
+			vim.cmd.colorscheme("kanso")
 		end,
 	},
 
