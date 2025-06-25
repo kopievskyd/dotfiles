@@ -13,10 +13,11 @@ This repository contains my personal configuration files for macOS. It uses Home
 ```
 .
 ├── .config/                # Configuration files
-│   ├── ghostty/            # Ghostty terminal settings
 │   ├── git/                # Git configuration
 │   ├── hammerspoon/        # Hammerspoon scripts
 │   ├── homebrew/           # Homebrew bundle file
+│   ├── kitty/              # Kitty terminal settings
+│   ├── mise/               # Mise configuration
 │   ├── nvim/               # Neovim configuration
 │   ├── ripgrep/            # Ripgrep configuration
 │   └── zsh/                # Zsh configuration
@@ -101,12 +102,10 @@ nvim/
 - **Fuzzy Finding**: Uses [mini.pick](https://github.com/echasnovski/mini.pick) for file search, live grep, and more
 - **Persistent Undo History**: Keeps undo history across sessions
 - **File Explorer**: Uses built-in Netrw instead of tree plugins
-- **Custom Winbar**: Shows file path and modification status
-- **Color Scheme**: [Catppuccin](https://github.com/catppuccin/nvim)
 
 ### Plugins
 
-- [`catppuccin`](https://github.com/catppuccin/nvim) - color scheme
+- [`kanso.nvim`](https://github.com/webhooked/kanso.nvim) - color scheme
 - [`mason.nvim`](https://github.com/mason-org/mason.nvim) - manages LSP servers, DAP adapters, linters, and formatters
 - [`blink.cmp`](https://github.com/Saghen/blink.cmp) - completion plugin
 - [`conform.nvim`](https://github.com/stevearc/conform.nvim) - lightweight yet powerful formatter
