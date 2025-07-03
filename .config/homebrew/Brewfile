@@ -3,11 +3,12 @@ brew "git"
 brew "fzf"
 brew "wget"
 brew "tree"
-brew "mise"
 brew "gnupg"
 brew "ripgrep"
 brew "neovim"
 brew "pinentry-mac"
+brew "node"
+brew "go"
 
 # Applications
 cask "rectangle"
