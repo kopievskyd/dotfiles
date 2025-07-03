@@ -56,7 +56,6 @@ bindkey -v '^?' backward-delete-char
 alias dotfiles="git --git-dir=${HOME}/Developer/dotfiles --work-tree=${HOME}"
 alias tree="tree -C --dirsfirst --noreport"
 alias ls="ls -lAh --color"
-alias mkdir="mkdir -p"
 
 # Add Homebrew binaries to PATH
 export PATH="${HOMEBREW_PREFIX}/bin:${PATH}"
