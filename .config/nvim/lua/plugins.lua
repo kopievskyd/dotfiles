@@ -76,17 +76,6 @@ return {
 		end,
 	},
 
-	-- Indent guides
-	{
-		"folke/snacks.nvim",
-		opts = {
-			indent = {
-				animate = { enabled = false },
-				scope = { enabled = false },
-			},
-		},
-	},
-
 	-- Surround
 	{
 		"kylechui/nvim-surround",
