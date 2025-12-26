@@ -22,6 +22,7 @@ export EDITOR="$VISUAL"
 
 # Add to path
 typeset -U path
+path=("$HOMEBREW_PREFIX/sbin" $path)
 path=("$HOMEBREW_PREFIX/bin" $path)
 path=("$GOPATH/bin" $path)
 
@@ -37,7 +38,7 @@ alias wget="wget --no-hsts"
 alias dotfiles="git --git-dir=$HOME/Developer/.dotfiles --work-tree=$HOME"
 
 # Completion setup
-fpath+=("$ZDOTDIR/completion")
+fpath+=("$ZDOTDIR/completions")
 fpath+=("$HOMEBREW_PREFIX/share/zsh/site-functions")
 autoload -Uz compinit && defer compinit -d "$XDG_CACHE_HOME/.zcompdump"
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/.zcompcache"
@@ -54,4 +55,4 @@ defer plug "Aloxaf/fzf-tab"
 setopt PROMPT_SUBST
 
 # Set prompt
-PS1=' %(?..%F{red})➜ %F{blue}%~%F{white}$(git_status)%f '
+PS1=' %F{blue}%~%F{white}$(git_status) %(?..%F{red})%(!.#.$)%f '
