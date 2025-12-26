@@ -4,6 +4,14 @@
 	name = Dmitry Kopievsky
 	email = kopievskyd@gmail.com
 	signingkey = 2F9338C1FAB7D45E
+[core]
+	compression = 9
+	preloadIndex = true
+[status]
+	showStash = true
+[push]
+	autoSetupRemote = true
+	followTags = true
 [commit]
 	gpgsign = true
 [tag]
