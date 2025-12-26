@@ -1,11 +1,11 @@
 theme = kanso
-font-family = Iosevka Fixed SS05
+font-family = Iosevka Fixed
 font-size = 15
 font-thicken = true
-adjust-cell-height = 3
-macos-titlebar-proxy-icon = hidden
-window-title-font-family = Iosevka Fixed SS05
+window-title-font-family = Iosevka Fixed
 window-padding-x = 8
 window-save-state = always
 unfocused-split-opacity = 1
+custom-shader = shaders/cursor_smear.glsl
+macos-titlebar-proxy-icon = hidden
 term = xterm-256color
