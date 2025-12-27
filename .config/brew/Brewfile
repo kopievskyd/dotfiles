@@ -4,37 +4,41 @@ brew "fzf"
 brew "wget"
 brew "tree"
 brew "gnupg"
-brew "neovim"
+brew "neovim", args: ["HEAD"]
 brew "ripgrep"
 brew "pinentry-mac"
-brew "biome"
-brew "node"
 brew "go"
+brew "node"
 brew "lua-language-server"
 brew "stylua"
+brew "biome"
+brew "shfmt"
 
 # Apps
 cask "syncthing-app"
-cask "pika"
 cask "domzilla-caffeine"
-cask "transmission"
-cask "ghostty"
+cask "pika"
+cask "keepassxc"
 cask "itsycal"
+cask "transmission"
 cask "pearcleaner"
 cask "the-unarchiver"
-cask "keepassxc"
-cask "telegram"
+cask "vlc"
 cask "visual-studio-code"
-cask "brave-browser"
-cask "firefox"
+cask "telegram"
+cask "helium-browser"
+cask "ghostty"
 cask "obsidian"
 cask "figma"
 cask "affinity"
-cask "helium-browser"
-cask "vlc"
 
-# VS Code Extensions
-vscode "pkief.material-icon-theme"
-vscode "usernamehw.errorlens"
-vscode "vscodevim.vim"
-vscode "biomejs.biome"
+# Fonts
+cask "font-source-sans-3"
+cask "font-sf-mono"
+cask "font-iosevka"
+
+# Go packages
+go "golang.org/x/tools/gopls"
+
+# Mac App Store apps
+mas "WireGuard", id: 1451685025
