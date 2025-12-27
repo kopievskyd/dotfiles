@@ -84,5 +84,6 @@
 	// Language specific
 	"[jsonc]": {
 		"editor.defaultFormatter": "biomejs.biome"
-	}
+	},
+	"workbench.secondarySideBar.defaultVisibility": "hidden"
 }
