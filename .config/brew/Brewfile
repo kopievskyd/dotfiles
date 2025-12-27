@@ -37,6 +37,12 @@ cask "font-source-sans-3"
 cask "font-sf-mono"
 cask "font-iosevka"
 
+# VS Code Extensions
+vscode "pkief.material-icon-theme"
+vscode "usernamehw.errorlens"
+vscode "vscodevim.vim"
+vscode "biomejs.biome"
+
 # Go packages
 go "golang.org/x/tools/gopls"
 
