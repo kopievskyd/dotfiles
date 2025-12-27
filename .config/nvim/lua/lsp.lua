@@ -15,25 +15,25 @@ for i = 32, 126 do
 	end
 end
 
-vim.schedule(function()
-	vim.lsp.config("*", {
-		on_init = function(client, _)
-			client.server_capabilities.semanticTokensProvider = nil
-			client.server_capabilities.completionProvider.triggerCharacters = chars
-		end,
-		on_attach = function(client, bufnr)
-			vim.lsp.completion.enable(true, client.id, bufnr, {
-				autotrigger = true,
-				convert = function(item)
-					return { abbr = item.label:gsub("%b()", "") }
-				end,
-			})
-		end,
-	})
-	vim.lsp.enable(servers)
-	vim.diagnostic.config({
-		virtual_text = true,
-		severity_sort = true,
-		update_in_insert = true,
-	})
-end)
+vim.lsp.config("*", {
+	on_init = function(client, _)
+		client.server_capabilities.semanticTokensProvider = nil
+		client.server_capabilities.completionProvider.triggerCharacters = chars
+	end,
+	on_attach = function(client, bufnr)
+		vim.lsp.completion.enable(true, client.id, bufnr, {
+			autotrigger = true,
+			convert = function(item)
+				return { abbr = item.label:gsub("%b()", "") }
+			end,
+		})
+	end,
+})
+
+vim.lsp.enable(servers)
+
+vim.diagnostic.config({
+	virtual_text = true,
+	severity_sort = true,
+	update_in_insert = true,
+})
