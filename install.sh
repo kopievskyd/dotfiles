@@ -58,7 +58,7 @@ create_vscode_symlinks() {
 
 macos_defaults_setup() {
     printf "Configuring macOS defaults...\n"
-    defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+    defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
     defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
     defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
     defaults write com.apple.dock autohide-delay -float 0
