@@ -42,10 +42,11 @@ install_homebrew() {
 }
 
 install_brew_packages() {
-    [[ -f "$BREWFILE_PATH" ]] || return 1
-    printf "Installing packages from Brewfile...\n"
-    brew bundle --file="$BREWFILE_PATH"
-    brew cleanup --prune=all &>/dev/null
+	[[ -f "$BREWFILE_PATH" ]] || return 1
+	export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
+	printf "Installing packages from Brewfile...\n"
+	brew bundle --file="$BREWFILE_PATH"
+	brew cleanup --prune=all &>/dev/null
 }
 
 create_vscode_symlinks() {
