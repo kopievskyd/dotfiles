@@ -35,7 +35,6 @@ cask "affinity"
 
 # Fonts
 cask "font-source-sans-3"
-cask "font-sf-mono"
 cask "font-iosevka"
 
 # VS Code Extensions
