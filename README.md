@@ -15,6 +15,8 @@ This repository contains my personal configuration files for macOS. It uses Home
 │   ├── nvim/               # Neovim configuration
 │   ├── rg/                 # Ripgrep configuration
 │   └── zsh/                # Zsh configuration
+├── .gnupg/                 # GPG configuration
+├── .ssh/                   # SSH configuration
 ├── .vscode/                # VS Code settings
 ├── .zshenv                 # Environment variables
 ├── README.md               # This file
