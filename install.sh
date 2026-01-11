@@ -86,7 +86,7 @@ create_vscode_symlinks() {
 }
 
 macos_setup() {
-    printf "Configuring macOS defaults...\n"
+    printf "Configuring macOS...\n"
     sudo scutil --set HostName macbook
     sudo scutil --set LocalHostName macbook
     sudo scutil --set ComputerName macbook
