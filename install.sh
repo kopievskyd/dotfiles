@@ -13,6 +13,7 @@ readonly BREWFILE_PATH="$HOME/.config/brew/Brewfile"
 readonly VSCODE_USER_DIR="$HOME/Library/Application Support/Code/User"
 readonly VSCODE_SETTINGS_SOURCE="$HOME/.vscode/settings.json"
 readonly VSCODE_SETTINGS_TARGET="$VSCODE_USER_DIR/settings.json"
+readonly SF_MONO_SOURCE="/System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts"
 
 dotfiles() {
     git --git-dir="$REPO_DIR" --work-tree="$HOME" "$@"
@@ -75,7 +76,7 @@ install_jetbrains_mono() {
 install_sf_mono() {
     [[ -f "$FONT_DIR/SF-Mono-Regular.otf" ]] && return 0
     printf "Installing SF Mono...\n"
-    cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/. ~/Library/Fonts || return 1
+    cp -R "$SF_MONO_SOURCE/." "$FONT_DIR" || return 1
 }
 
 create_vscode_symlinks() {
