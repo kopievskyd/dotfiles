@@ -4,8 +4,10 @@ set -u
 
 readonly REPO_URL="https://github.com/kopievskyd/dotfiles.git"
 readonly HOMEBREW_URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
+readonly FONT_API_URL="https://api.github.com/repos/JetBrains/JetBrainsMono/releases/latest"
 
 readonly REPO_DIR="$HOME/Developer/.dotfiles"
+readonly FONT_DIR="$HOME/Library/Fonts"
 readonly HOMEBREW_PATH="/opt/homebrew/bin/brew"
 readonly BREWFILE_PATH="$HOME/.config/brew/Brewfile"
 readonly VSCODE_USER_DIR="$HOME/Library/Application Support/Code/User"
@@ -49,6 +51,33 @@ install_brew_packages() {
 	brew cleanup --prune=all &>/dev/null
 }
 
+install_jetbrains_mono() {
+	[[ -f "$FONT_DIR/JetBrainsMono-Regular.ttf" ]] && return 0
+
+	printf "Installing JetBrains Mono...\n"
+	local font_url temp_dir ttf_dir
+	font_url=$(curl -fsSL "$FONT_API_URL" |
+		grep -o '"browser_download_url": *"[^"]*\.zip"' |
+		head -1 | cut -d'"' -f4)
+	[[ -z "$font_url" ]] && return 1
+
+	temp_dir=$(mktemp -d)
+	trap "rm -rf '$temp_dir'" EXIT
+	curl -fL -o "$temp_dir/JetBrainsMono.zip" "$font_url" &>/dev/null || return 1
+	unzip -q "$temp_dir/JetBrainsMono.zip" -d "$temp_dir" || return 1
+	ttf_dir=$(find "$temp_dir" -type d -iname "ttf" | head -n 1)
+	[[ -z "$ttf_dir" ]] && return 1
+
+	mkdir -p "$FONT_DIR"
+	cp "$ttf_dir"/*.ttf "$FONT_DIR/" || return 1
+}
+
+install_sf_mono() {
+    [[ -f "$FONT_DIR/SF-Mono-Regular.otf" ]] && return 0
+    printf "Installing SF Mono...\n"
+    cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/. ~/Library/Fonts || return 1
+}
+
 create_vscode_symlinks() {
     [[ -f "$VSCODE_SETTINGS_SOURCE" ]] || return 1
     mkdir -p "$VSCODE_USER_DIR"
@@ -69,6 +98,8 @@ main() {
     install_homebrew
     setup_bare_repo || { printf "Error: Dotfiles setup failed.\n" >&2; exit 1; }
     install_brew_packages || printf "Warning: Brewfile installation failed.\n" >&2
+    install_jetbrains_mono || printf "Warning: JetBrains Mono installation failed.\n" >&2
+    install_sf_mono || printf "Warning: SF Mono installation failed.\n" >&2
     create_vscode_symlinks || printf "Warning: VS Code symlink creation failed.\n" >&2
     macos_defaults_setup
     printf "Setup complete!\n"
