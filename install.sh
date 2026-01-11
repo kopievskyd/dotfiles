@@ -85,12 +85,16 @@ create_vscode_symlinks() {
     ln -sf "$VSCODE_SETTINGS_SOURCE" "$VSCODE_SETTINGS_TARGET" || return 1
 }
 
-macos_defaults_setup() {
+macos_setup() {
     printf "Configuring macOS defaults...\n"
+    sudo scutil --set HostName macbook
+    sudo scutil --set LocalHostName macbook
+    sudo scutil --set ComputerName macbook
     defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
     defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
     defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
     defaults write com.apple.dock autohide-delay -float 0
+    dscacheutil -flushcache
     killall Dock || true
 }
 
@@ -101,7 +105,7 @@ main() {
     install_jetbrains_mono || printf "Warning: JetBrains Mono installation failed.\n" >&2
     install_sf_mono || printf "Warning: SF Mono installation failed.\n" >&2
     create_vscode_symlinks || printf "Warning: VS Code symlink creation failed.\n" >&2
-    macos_defaults_setup
+    macos_setup
     printf "Setup complete!\n"
 }
 
