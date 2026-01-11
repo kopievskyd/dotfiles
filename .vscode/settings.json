@@ -7,7 +7,7 @@
 	},
 
 	// Fonts
-	"editor.fontFamily": "SF Mono",
+	"editor.fontFamily": "JetBrains Mono NL",
 	"editor.fontSize": 14,
 	"editor.lineHeight": 23,
 	"terminal.integrated.fontSize": 13,
