@@ -4,6 +4,7 @@ font-size = 15
 font-thicken = true
 window-title-font-family = Iosevka Fixed
 window-padding-x = 8
+window-colorspace = display-p3
 window-save-state = always
 unfocused-split-opacity = 1
 custom-shader = shaders/cursor_smear.glsl
