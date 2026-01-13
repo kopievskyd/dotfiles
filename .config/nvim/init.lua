@@ -68,6 +68,17 @@ vim.pack.add({
 	"https://github.com/nvim-mini/mini.pick",
 })
 
+-- Get all inactive plugins
+local unused = vim.iter(vim.pack.get())
+	:filter(function(x) return not x.active end)
+	:map(function(x) return x.spec.name end)
+	:totable()
+
+-- Remove unused plugins
+for _, name in ipairs(unused) do
+	vim.pack.del({ name })
+end
+
 -- Load plugins
 require("utils").lazy_load("mini.pairs")
 require("utils").lazy_load("nvim-surround")
