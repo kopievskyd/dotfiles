@@ -25,7 +25,7 @@ cask "pearcleaner"
 cask "the-unarchiver"
 cask "vlc"
 cask "visual-studio-code"
-cask "telegram"
+cask "telegram-desktop"
 cask "helium-browser"
 cask "ghostty"
 cask "firefox"
@@ -36,6 +36,7 @@ cask "affinity"
 # Fonts
 cask "font-source-sans-3"
 cask "font-iosevka"
+cask "font-hermit"
 
 # VS Code Extensions
 vscode "pkief.material-icon-theme"
