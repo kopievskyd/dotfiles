@@ -1,6 +1,7 @@
 theme = kanso-ink
 font-family = Hermit
 font-thicken = true
+adjust-cell-height = 2%
 window-padding-x = 8
 window-save-state = always
 unfocused-split-opacity = 1
