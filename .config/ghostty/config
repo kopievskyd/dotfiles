@@ -1,13 +1,10 @@
-theme = kanso
-font-family = Iosevka Fixed
-font-size = 15
+theme = kanso-ink
+font-family = Hermit
 font-thicken = true
-adjust-cell-height = 1
-window-title-font-family = Iosevka Fixed
 window-padding-x = 8
-window-colorspace = display-p3
 window-save-state = always
 unfocused-split-opacity = 1
 custom-shader = shaders/cursor_smear.glsl
 macos-titlebar-proxy-icon = hidden
 term = xterm-256color
+title = " "
