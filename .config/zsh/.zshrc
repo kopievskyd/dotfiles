@@ -1,5 +1,4 @@
 # Load functions
-source "$ZDOTDIR/functions/empty_line.zsh"
 source "$ZDOTDIR/functions/git_status.zsh"
 source "$ZDOTDIR/functions/defer.zsh"
 source "$ZDOTDIR/functions/plug.zsh"
@@ -55,8 +54,5 @@ defer plug "Aloxaf/fzf-tab"
 # Enable prompt substitution
 setopt PROMPT_SUBST
 
-# Newline character
-NEW_LINE=$'\n'
-
 # Set prompt
-PS1='%F{magenta}%n %F{blue}%~%F{white}$(git_status) $NEW_LINE %(?..%F{red})%(!.#.$)%f '
+PS1='%F{magenta}%n %F{blue}%~%F{white}$(git_status) %(?..%F{red})%(!.#.$)%f '
