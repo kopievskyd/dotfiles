@@ -41,7 +41,7 @@ alias dotfiles="git --git-dir=$HOME/Developer/.dotfiles --work-tree=$HOME"
 # Completion setup
 fpath+=("$ZDOTDIR/completions")
 fpath+=("$HOMEBREW_PREFIX/share/zsh/site-functions")
-autoload -Uz compinit && defer compinit -d "$XDG_CACHE_HOME/.zcompdump"
+autoload -Uz compinit && defer compinit -i -d "$XDG_CACHE_HOME/.zcompdump"
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/.zcompcache"
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' menu no
