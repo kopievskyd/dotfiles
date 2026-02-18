@@ -10,9 +10,6 @@ readonly REPO_DIR="$HOME/Developer/.dotfiles"
 readonly FONT_DIR="$HOME/Library/Fonts"
 readonly HOMEBREW_PATH="/opt/homebrew/bin/brew"
 readonly BREWFILE_PATH="$HOME/.config/brew/Brewfile"
-readonly VSCODE_USER_DIR="$HOME/Library/Application Support/Code/User"
-readonly VSCODE_SETTINGS_SOURCE="$HOME/.vscode/settings.json"
-readonly VSCODE_SETTINGS_TARGET="$VSCODE_USER_DIR/settings.json"
 readonly SF_MONO_SOURCE="/System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts"
 
 dotfiles() {
@@ -79,13 +76,6 @@ install_sf_mono() {
     cp -R "$SF_MONO_SOURCE/." "$FONT_DIR" || return 1
 }
 
-create_vscode_symlinks() {
-    [[ -f "$VSCODE_SETTINGS_SOURCE" ]] || return 1
-    mkdir -p "$VSCODE_USER_DIR"
-    printf "Creating symlink for VS Code settings...\n"
-    ln -sf "$VSCODE_SETTINGS_SOURCE" "$VSCODE_SETTINGS_TARGET" || return 1
-}
-
 macos_setup() {
     printf "Configuring macOS...\n"
     sudo scutil --set HostName macbook
@@ -105,7 +95,6 @@ main() {
     install_brew_packages || printf "Warning: Brewfile installation failed.\n" >&2
     install_jetbrains_mono || printf "Warning: JetBrains Mono installation failed.\n" >&2
     install_sf_mono || printf "Warning: SF Mono installation failed.\n" >&2
-    create_vscode_symlinks || printf "Warning: VS Code symlink creation failed.\n" >&2
     macos_setup
     printf "Setup complete!\n"
 }
