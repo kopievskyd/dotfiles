@@ -17,7 +17,6 @@ This repository contains my personal configuration files for macOS. It uses Home
 │   └── zsh/                # Zsh configuration
 ├── .gnupg/                 # GPG configuration
 ├── .ssh/                   # SSH configuration
-├── .vscode/                # VS Code settings
 ├── .zshenv                 # Environment variables
 ├── README.md               # This file
 └── install.sh              # Install script
