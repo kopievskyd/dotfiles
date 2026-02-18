@@ -19,7 +19,7 @@ function _get_git_status() {
         return
     fi
     git diff-index --quiet HEAD 2>/dev/null || dirty="*"
-    echo " git:$branch$dirty"
+    echo " $branch$dirty"
 }
 
 # Async implementation adapted from zsh-users/zsh-autosuggestions
