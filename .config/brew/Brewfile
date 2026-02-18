@@ -24,7 +24,6 @@ cask "transmission"
 cask "pearcleaner"
 cask "the-unarchiver"
 cask "vlc"
-cask "visual-studio-code"
 cask "telegram"
 cask "helium-browser"
 cask "ghostty"
@@ -37,12 +36,6 @@ cask "affinity"
 cask "font-source-sans-3"
 cask "font-iosevka"
 cask "font-hermit"
-
-# VS Code Extensions
-vscode "pkief.material-icon-theme"
-vscode "usernamehw.errorlens"
-vscode "vscodevim.vim"
-vscode "biomejs.biome"
 
 # Go packages
 go "golang.org/x/tools/gopls"
