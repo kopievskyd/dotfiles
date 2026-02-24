@@ -14,6 +14,7 @@ This repository contains my personal configuration files for macOS. It uses Home
 │   ├── git/                # Git configuration
 │   ├── nvim/               # Neovim configuration
 │   ├── rg/                 # Ripgrep configuration
+│   ├── zed/                # Zed settings
 │   └── zsh/                # Zsh configuration
 ├── .gnupg/                 # GPG configuration
 ├── .ssh/                   # SSH configuration
