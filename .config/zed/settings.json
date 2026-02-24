@@ -1,0 +1,85 @@
+{
+  "ui_font_size": 13,
+  "ui_font_weight": 500,
+  "buffer_font_size": 13,
+  "buffer_font_weight": 500,
+  "ui_font_family": "JetBrains Mono NL",
+  "buffer_font_family": "JetBrains Mono NL",
+  "theme": {
+    "mode": "system",
+    "dark": "Kanso Ink",
+    "light": "Kanso Pearl",
+  },
+  "title_bar": {
+    "show_onboarding_banner": false,
+    "show_sign_in": false,
+    "show_user_menu": false,
+    "show_user_picture": false,
+  },
+  "tab_bar": {
+    "show_nav_history_buttons": false,
+    "show_tab_bar_buttons": false,
+  },
+  "toolbar": {
+    "breadcrumbs": false,
+    "quick_actions": false,
+  },
+  "project_panel": {
+    "default_width": 300,
+    "hide_root": true,
+    "auto_fold_dirs": false,
+    "sticky_scroll": false,
+    "indent_guides": {
+      "show": "never",
+    },
+    "scrollbar": {
+      "show": "never",
+    },
+  },
+  "outline_panel": {
+    "default_width": 300,
+    "indent_guides": {
+      "show": "never",
+    },
+    "scrollbar": {
+      "show": "never",
+    },
+  },
+  "indent_guides": {
+    "enabled": false,
+  },
+  "gutter": {
+    "min_line_number_digits": 1,
+    "folds": false,
+  },
+  "scrollbar": {
+    "show": "never",
+  },
+  "notification_panel": {
+    "button": false,
+  },
+  "collaboration_panel": {
+    "button": false,
+  },
+  "search": {
+    "button": false,
+  },
+  "status_bar": {
+    "cursor_position_button": false,
+  },
+  "restore_on_startup": "launchpad",
+  "format_on_save": "off",
+  "cursor_blink": false,
+  "disable_ai": true,
+  "vim_mode": true,
+  "session": {
+    "trust_all_worktrees": true,
+  },
+  "vim": {
+    "use_smartcase_find": true,
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+  },
+}
