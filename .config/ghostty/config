@@ -1,5 +1,5 @@
 theme = kanso-ink
-font-family = Hermit
+font-family = JetBrains Mono NL
 font-thicken = true
 adjust-cell-height = 2%
 window-padding-x = 8
