@@ -55,4 +55,4 @@ defer plug "Aloxaf/fzf-tab"
 setopt PROMPT_SUBST
 
 # Set prompt
-PS1='%(?..%F{red})➜  %F{blue}%1d%F{white}$(git_status) %f'
+PS1='%(?..%F{red})➜ %F{blue}%1d%F{white}$(git_status) %f'
