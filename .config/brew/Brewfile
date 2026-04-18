@@ -32,7 +32,6 @@ cask "firefox"
 cask "obsidian"
 cask "figma"
 cask "affinity"
-cask "zed"
 
 # Fonts
 cask "font-source-sans-3"
