@@ -10,7 +10,6 @@ readonly REPO_DIR="$HOME/Developer/.dotfiles"
 readonly FONT_DIR="$HOME/Library/Fonts"
 readonly HOMEBREW_PATH="/opt/homebrew/bin/brew"
 readonly BREWFILE_PATH="$HOME/.config/brew/Brewfile"
-readonly SF_MONO_SOURCE="/System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts"
 
 dotfiles() {
     git --git-dir="$REPO_DIR" --work-tree="$HOME" "$@"
@@ -70,12 +69,6 @@ install_jetbrains_mono() {
 	cp "$ttf_dir"/*.ttf "$FONT_DIR/" || return 1
 }
 
-install_sf_mono() {
-    [[ -f "$FONT_DIR/SF-Mono-Regular.otf" ]] && return 0
-    printf "Installing SF Mono...\n"
-    cp -R "$SF_MONO_SOURCE/." "$FONT_DIR" || return 1
-}
-
 macos_setup() {
     printf "Configuring macOS...\n"
     sudo scutil --set HostName macbook
@@ -94,7 +87,6 @@ main() {
     setup_bare_repo || { printf "Error: Dotfiles setup failed.\n" >&2; exit 1; }
     install_brew_packages || printf "Warning: Brewfile installation failed.\n" >&2
     install_jetbrains_mono || printf "Warning: JetBrains Mono installation failed.\n" >&2
-    install_sf_mono || printf "Warning: SF Mono installation failed.\n" >&2
     macos_setup
     printf "Setup complete!\n"
 }
