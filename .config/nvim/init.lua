@@ -100,7 +100,6 @@ require("utils").lazy_load("mini.pick", {
 
 -- Configuration colorscheme
 require("kanso").setup({
-	italics = false,
 	transparent = true,
 	overrides = function(colors)
 		local theme = colors.theme
@@ -118,3 +117,5 @@ vim.cmd.colorscheme("kanso")
 require("utils").lazy_load(function()
 	require("lsp")
 end)
+
+require('vim._core.ui2').enable()
