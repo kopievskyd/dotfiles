@@ -117,5 +117,3 @@ vim.cmd.colorscheme("kanso")
 require("utils").lazy_load(function()
 	require("lsp")
 end)
-
-require('vim._core.ui2').enable()
