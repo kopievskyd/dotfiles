@@ -34,6 +34,7 @@ cask "affinity"
 
 # Fonts
 cask "font-source-sans-3"
+cask "font-ibm-plex-mono"
 cask "font-iosevka"
 cask "font-hermit"
 
