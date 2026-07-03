@@ -71,9 +71,9 @@ install_jetbrains_mono() {
 
 macos_setup() {
     printf "Configuring macOS...\n"
-    sudo scutil --set HostName macbook-air
-    sudo scutil --set LocalHostName macbook-air
-    sudo scutil --set ComputerName macbook-air
+    sudo scutil --set HostName mba
+    sudo scutil --set LocalHostName mba
+    sudo scutil --set ComputerName mba
     defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
     defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
     defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
