@@ -1,8 +1,8 @@
 # CLI tools
 brew "git"
-brew "fzf"
 brew "wget"
 brew "tree"
+brew "fzf"
 brew "gnupg"
 brew "neovim"
 brew "ripgrep"
