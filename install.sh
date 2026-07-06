@@ -6,7 +6,7 @@ readonly HOSTNAME="air"
 
 readonly REPO_DIR="$HOME/Developer/.dotfiles"
 readonly HOMEBREW_PATH="/opt/homebrew/bin/brew"
-readonly BREWFILE_PATH="$HOME/.config/brew/Brewfile"
+readonly BREWFILE_PATH="$HOME/.config/homebrew/Brewfile"
 
 readonly REPO_URL="https://github.com/kopievskyd/dotfiles.git"
 readonly HOMEBREW_URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"

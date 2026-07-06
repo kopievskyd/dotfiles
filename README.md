@@ -9,9 +9,9 @@ This repository contains my personal configuration files for macOS. It uses Home
 ```
 .
 ├── .config/                # Configuration files
-│   ├── brew/               # Homebrew bundle file
 │   ├── ghostty/            # Ghostty terminal settings
 │   ├── git/                # Git configuration
+│   ├── homebrew/           # Homebrew bundle file
 │   ├── nvim/               # Neovim configuration
 │   ├── rg/                 # Ripgrep configuration
 │   └── zsh/                # Zsh configuration
