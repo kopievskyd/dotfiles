@@ -1,4 +1,5 @@
 theme = kanso-zen
+font-size = 14
 font-family = IBM Plex Mono
 font-thicken = true
 window-padding-x = 8
