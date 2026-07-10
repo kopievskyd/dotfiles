@@ -189,6 +189,38 @@ autocmd("FileType", {
 	end,
 })
 
+-- Override netrw's split-open behavior
+autocmd("FileType", {
+	group = user,
+	pattern = "netrw",
+	callback = function(ev)
+		vim.keymap.set("n", "o", function()
+			local _, relpath = get_cfile_path()
+			toggle_netrw()
+			vim.cmd.split(vim.fn.fnameescape(relpath))
+		end, {
+			buffer = ev.buf,
+			desc = "Netrw: Open selected file in split",
+		})
+	end,
+})
+
+-- Override netrw's vsplit-open behavior
+autocmd("FileType", {
+	group = user,
+	pattern = "netrw",
+	callback = function(ev)
+		vim.keymap.set("n", "v", function()
+			local _, relpath = get_cfile_path()
+			toggle_netrw()
+			vim.cmd.vsplit(vim.fn.fnameescape(relpath))
+		end, {
+			buffer = ev.buf,
+			desc = "Netrw: Open selected file in vertical split",
+		})
+	end,
+})
+
 -- Override netrw's tab-open behavior
 autocmd("FileType", {
 	group = user,
