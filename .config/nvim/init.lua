@@ -160,6 +160,9 @@ local function get_cfile_path()
 	local file = vim.fn.expand("<cfile>")
 	local path = vim.fs.joinpath(vim.b.netrw_curdir, file)
 	local relpath = vim.fn.fnamemodify(path, ":.")
+	if relpath == "" then
+		relpath = "."
+	end
 	return path, relpath
 end
 
