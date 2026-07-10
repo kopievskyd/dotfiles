@@ -351,8 +351,6 @@ autocmd("User", {
 				client.server_capabilities.semanticTokensProvider = nil
 				client.server_capabilities.completionProvider.triggerCharacters = chars
 			end,
-
-			-- Enable native LSP completion
 			on_attach = function(client, bufnr)
 				vim.lsp.completion.enable(true, client.id, bufnr, {
 					autotrigger = true,
