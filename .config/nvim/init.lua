@@ -156,6 +156,15 @@ autocmd("FileType", {
 	end,
 })
 
+autocmd("FileType", {
+	group = user,
+	pattern = "java",
+	callback = function(args)
+		vim.opt_local.expandtab = true
+		pcall(vim.treesitter.start, args.buf)
+	end,
+})
+
 local function get_cfile_path()
 	local file = vim.fn.expand("<cfile>")
 	local path = vim.fs.joinpath(vim.b.netrw_curdir, file)
