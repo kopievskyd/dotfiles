@@ -1,105 +1,307 @@
 #!/bin/bash
+set -uo pipefail
 
-set -u
+readonly COMPUTERNAME='Air'
+readonly HOSTNAME='air'
 
-readonly HOSTNAME="air"
+readonly DOTFILES_DIR="$HOME/.dotfiles"
+readonly DOTFILES_URL='https://github.com/kopievskyd/dotfiles'
 
-readonly REPO_DIR="$HOME/Developer/.dotfiles"
-readonly HOMEBREW_PATH="/opt/homebrew/bin/brew"
-readonly BREWFILE_PATH="$HOME/.config/homebrew/Brewfile"
+# Path to the Brewfile with packages to install
+readonly BREWFILE="$HOME/.config/homebrew/Brewfile"
 
-readonly REPO_URL="https://github.com/kopievskyd/dotfiles.git"
-readonly HOMEBREW_URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
+# Languages for tree-sitter parser installation
+readonly TS_LANGUAGES=(java)
 
-dotfiles() {
-	git --git-dir="$REPO_DIR" --work-tree="$HOME" "$@"
+readonly YELLOW='\033[33m'
+readonly GREEN='\033[32m'
+readonly RED='\033[31m'
+readonly RESET='\033[0m'
+
+function info() {
+	printf 'info: %s\n' "$1"
 }
 
-setup_dotfiles() {
-	if [[ ! -d "$REPO_DIR" ]]; then
-		printf "Cloning into bare repository...\n"
-		git clone --bare --quiet "$REPO_URL" "$REPO_DIR" || return 1
-	else
-		printf "Fetching updates for existing bare repository...\n"
-		dotfiles pull --rebase --autostash --quiet || return 1
+function warn() {
+	printf "${YELLOW}warn:${RESET} %s\n" "$1" >&2
+}
+
+function error() {
+	printf "${RED}error:${RESET} %s\n" "$1" >&2
+}
+
+function success() {
+	printf "${GREEN}✓${RESET} %s\n" "$1"
+}
+
+function request_sudo() {
+	SUDO_PROMPT='sudo: enter password ' sudo -v
+}
+
+function setup_sudo() {
+	local sudoers='/private/etc/sudoers.d/prompt'
+
+	if [[ -f "$sudoers" ]]; then
+		warn 'sudo configuration already exists'
+		warn 'skipping sudo configuration'
+		return 0
 	fi
 
-	printf "Checking out dotfiles...\n"
-	dotfiles config core.sparseCheckout true
-	dotfiles sparse-checkout init --no-cone
-	dotfiles sparse-checkout set '/*' '!README.md' '!install.sh'
-	dotfiles config status.showUntrackedFiles no
-	dotfiles checkout || return 1
-}
+	# Create a temporary sudoers file for validation
+	local tmp
+	tmp=$(mktemp)
+	printf '%s\n' \
+		'Defaults passprompt="sudo: enter password "' \
+		'Defaults passprompt_override' \
+		'Defaults badpass_message="sudo: sorry, try again"' >"$tmp"
 
-install_homebrew() {
-	if [[ ! -x "$HOMEBREW_PATH" ]]; then
-		printf "Installing Homebrew...\n"
-		bash -c "$(curl -fsSL "$HOMEBREW_URL")"
-	fi
+	# Expand $tmp now so the trap removes the temporary file
+	# automatically when the function returns
+	# shellcheck disable=SC2064
+	trap "rm -f '$tmp'" RETURN
 
-	eval "$("$HOMEBREW_PATH" shellenv)"
-}
-
-install_packages() {
-	[[ -f "$BREWFILE_PATH" ]] || return 1
-
-	export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
-
-	printf "Installing packages from Brewfile...\n"
-	brew bundle --file="$BREWFILE_PATH"
-	brew cleanup --prune=all &>/dev/null
-}
-
-create_user_dirs() {
-	printf "Creating user directories...\n"
-
-	mkdir -p \
-		"${XDG_CACHE_HOME:-$HOME/.cache}" \
-		"${XDG_DATA_HOME:-$HOME/.local/share}" \
-		"${XDG_STATE_HOME:-$HOME/.local/state}"
-}
-
-create_hushlogin() {
-	printf "Creating ~/.hushlogin...\n"
-	touch "$HOME/.hushlogin"
-}
-
-cleanup_home() {
-	printf "Cleaning up home directory...\n"
-
-	rm -rf "$HOME/.zsh_sessions"
-	rm -f "$HOME/.zsh_history"
-	rm -f "$HOME/.CFUserTextEncoding"
-}
-
-setup_macos() {
-	printf "Configuring macOS...\n"
-
-	sudo scutil --set HostName "$HOSTNAME"
-	sudo scutil --set LocalHostName "$HOSTNAME"
-	sudo scutil --set ComputerName "$HOSTNAME"
-
-	defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
-	defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
-	defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
-	defaults write com.apple.dock autohide-delay -float 0
-	dscacheutil -flushcache
-	killall Dock || true
-}
-
-main() {
-	install_homebrew
-	setup_dotfiles || {
-		printf "Error: Dotfiles setup failed.\n" >&2
-		exit 1
+	info 'configuring sudo prompt'
+	visudo -cf "$tmp" >/dev/null || {
+		warn 'invalid sudo configuration'
+		return 1
 	}
-	create_user_dirs
-	install_packages || printf "Warning: Brewfile installation failed.\n" >&2
-	create_hushlogin
-	cleanup_home
-	setup_macos
-	printf "Setup complete!\n"
+	sudo install -m 0440 "$tmp" "$sudoers" || {
+		warn 'failed to configure sudo prompt'
+		return 1
+	}
+}
+
+function install_homebrew() {
+	local homebrew='/opt/homebrew/bin/brew'
+	local homebrew_url='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
+
+	if [[ ! -x "$homebrew" ]]; then
+		info 'installing homebrew'
+		NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL "$homebrew_url")" &>/dev/null || {
+			error 'failed to install homebrew'
+			return 1
+		}
+	fi
+
+	eval "$("$homebrew" shellenv)" || {
+		error 'failed to load homebrew environment'
+		return 1
+	}
+
+	success 'homebrew installed'
+}
+
+function dotfiles() {
+	git --git-dir="$DOTFILES_DIR" --work-tree="$HOME" "$@"
+}
+
+function setup_dotfiles() {
+	if [[ ! -d "$DOTFILES_DIR" ]]; then
+		info 'cloning dotfiles repository'
+		git clone --bare --quiet "$DOTFILES_URL" "$DOTFILES_DIR" || {
+			error 'failed to clone dotfiles repository'
+			return 1
+		}
+
+		# Don't list every file in $HOME as untracked
+		dotfiles config status.showUntrackedFiles no
+
+		# Check out everything except bootstrap.sh and README.md
+		dotfiles config core.sparseCheckout true
+		dotfiles sparse-checkout init --no-cone
+		dotfiles sparse-checkout set '/*' '!bootstrap.sh' '!README.md'
+	else
+		info 'updating dotfiles repository'
+		dotfiles pull --rebase --autostash --quiet || {
+			warn 'failed to update dotfiles repository'
+		}
+	fi
+
+	info 'checking out dotfiles'
+	dotfiles checkout --quiet || {
+		error 'failed to check out dotfiles'
+		return 1
+	}
+
+	success 'dotfiles installed'
+}
+
+function ensure_directories() {
+	info 'creating required directories'
+	mkdir -p \
+		"$HOME/.cache" \
+		"$HOME/.local/share" \
+		"$HOME/.local/state"
+}
+
+function install_packages() {
+	if [[ ! -f "$BREWFILE" ]]; then
+		warn "brewfile not found: $BREWFILE"
+		return 1
+	fi
+
+	# Use the custom GOPATH for Go packages installed via Brewfile
+	export GOPATH="$HOME/.local/share/go"
+
+	info 'installing packages'
+	brew bundle --file="$BREWFILE" &>/dev/null || {
+		warn 'some packages may not have been installed'
+		return 1
+	}
+
+	success 'packages installed'
+}
+
+function install_parser() {
+	local lang="$1"
+	local parser_dir="$2"
+	local queries_dir="$3"
+	local repo="tree-sitter-$lang"
+	local ts_url="https://github.com/tree-sitter/$repo"
+	local src_dir="$HOME/.local/share/tree-sitter/$repo"
+
+	if [[ ! -d "$src_dir" ]]; then
+		git clone --depth=1 --quiet "$ts_url" "$src_dir" || {
+			warn "failed to clone $repo"
+			return 1
+		}
+	else
+		git -C "$src_dir" pull --ff-only --quiet || {
+			warn "failed to update $repo"
+		}
+	fi
+
+	# Building parser
+	tree-sitter build -o "$parser_dir/$lang.so" "$src_dir" || {
+		warn "failed to build $lang parser"
+		return 1
+	}
+
+	# Installing queries
+	if [[ -d "$src_dir/queries" ]]; then
+		rm -rf "${queries_dir:?}/${lang:?}"
+		cp -R "$src_dir/queries" "$queries_dir/$lang" || {
+			warn "failed to install $lang queries"
+			return 1
+		}
+	fi
+
+	info "$repo parser installed"
+}
+
+function install_ts_parsers() {
+	local parser_dir="$HOME/.local/share/nvim/site/parser"
+	local queries_dir="$HOME/.local/share/nvim/site/queries"
+	local total="${#TS_LANGUAGES[@]}"
+	local installed="$total"
+
+	command -v tree-sitter &>/dev/null || {
+		warn 'tree-sitter-cli not found'
+		warn 'skipping tree-sitter parser installation'
+		return 1
+	}
+
+	mkdir -p "$parser_dir" "$queries_dir" || {
+		warn 'failed to create parser directories'
+		warn 'skipping tree-sitter parser installation'
+		return 1
+	}
+
+	local lang
+	for lang in "${TS_LANGUAGES[@]}"; do
+		install_parser "$lang" "$parser_dir" "$queries_dir" || {
+			warn "skipping $lang parser installation"
+			((--installed))
+		}
+	done
+
+	if ((installed == total)); then
+		success 'tree-sitter parsers installed'
+	else
+		warn "installed $installed of $total tree-sitter parsers"
+	fi
+}
+
+# Increments the caller's 'failed' counter via Bash dynamic scoping,
+# and returns the original command's exit status
+function apply() {
+	"$@"
+	local status=$?
+	((status == 0)) || ((++failed))
+	return "$status"
+}
+
+function apply_settings() {
+	local failed=0
+
+	# Setting hostname
+	apply sudo scutil --set ComputerName "$COMPUTERNAME"
+	apply sudo scutil --set HostName "$HOSTNAME"
+	apply sudo scutil --set LocalHostName "$HOSTNAME"
+
+	# Setting TextEdit
+	apply defaults write com.apple.TextEdit RichText -bool false
+	apply defaults write com.apple.TextEdit NSFixedPitchFontSize -int 14
+	apply defaults write com.apple.TextEdit CheckSpellingWhileTyping -bool false
+	apply defaults write com.apple.TextEdit CorrectSpellingAutomatically -bool false
+	apply defaults write com.apple.TextEdit ShowRuler -bool false
+	apply defaults write com.apple.TextEdit SmartSubstitutionsEnabledInRichTextOnly -bool false
+	apply defaults write com.apple.TextEdit SmartCopyPaste -bool false
+	apply defaults write com.apple.TextEdit SmartQuotes -bool false
+	apply defaults write com.apple.TextEdit SmartDashes -bool false
+	apply defaults write com.apple.TextEdit TextReplacement -bool false
+
+	# Refresh Activity Monitor every 2 seconds
+	apply defaults write com.apple.ActivityMonitor "UpdatePeriod" -int "2"
+
+	# Enable key repeat
+	apply defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+
+	# Prevent creating .DS_Store files on network and USB volumes
+	apply defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+	apply defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+
+	# Remove dock auto-hide delay
+	apply defaults write com.apple.dock autohide-delay -float 0 && killall Dock
+
+	# Suppressing login message
+	touch "$HOME/.hushlogin"
+
+	if ((failed == 0)); then
+		success 'system settings applied'
+	else
+		warn 'some system settings were not applied'
+	fi
+}
+
+function cleanup() {
+	info 'cleaning up'
+
+	rm -rf \
+		"$HOME/Library/Caches"/* \
+		"$HOME/.cache"/* \
+		2>/dev/null
+
+	rm -rf \
+		"$HOME/.CFUserTextEncoding" \
+		"$HOME/.zsh_sessions" \
+		"$HOME/.zsh_history"
+}
+
+function main() {
+	# Request sudo access for proper Homebrew installation
+	request_sudo || exit 1
+
+	setup_sudo
+	install_homebrew || exit 1
+	setup_dotfiles || exit 1
+	ensure_directories
+	install_packages
+	install_ts_parsers
+	apply_settings
+	cleanup
+
+	success 'setup complete'
 }
 
 main
