@@ -18,16 +18,16 @@ This repository contains my personal configuration files for macOS. It uses Home
 ├── .gnupg/                 # GPG configuration
 ├── .ssh/                   # SSH configuration
 ├── .zshenv                 # Environment variables
-├── README.md               # This file
-└── install.sh              # Install script
+├── bootstrap.sh            # Bootstrap script
+└── README.md               # This file
 ```
 
 ## Quick Start
 
-Install everything with a single command:
+Bootstrap a new macOS installation:
 
 ```sh
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/kopievskyd/dotfiles/refs/heads/main/install.sh)"
+curl -fsSL https://raw.githubusercontent.com/kopievskyd/dotfiles/main/bootstrap.sh | bash
 ```
 
 </samp>
