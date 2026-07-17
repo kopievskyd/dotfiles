@@ -9,4 +9,3 @@ unfocused-split-opacity = 1
 custom-shader = shaders/cursor-smear.glsl
 macos-titlebar-proxy-icon = hidden
 term = xterm-256color
-title = " "
