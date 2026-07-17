@@ -17,7 +17,7 @@ setopt SHARE_HISTORY
 setopt HIST_VERIFY
 
 # Export variables
-export VISUAL="nvim"
+export VISUAL='nvim'
 export EDITOR="$VISUAL"
 
 # Add to path
@@ -32,10 +32,10 @@ bindkey '^P' history-search-backward
 bindkey '^N' history-search-forward
 
 # Aliases
-alias ls="ls -F"
-alias tree="tree -F --dirsfirst --noreport"
-alias wget="wget --no-hsts"
-alias dotfiles="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
+alias ls='ls -F'
+alias tree='tree -F --dirsfirst --noreport'
+alias wget='wget --no-hsts'
+alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
 # Completion setup
 fpath+=("$ZDOTDIR/completions")
@@ -48,8 +48,8 @@ zstyle ':fzf-tab:*' fzf-flags \
     --no-info --no-separator --pointer='' --marker='  ' --color=fg:7,bg+:8
 
 # Enable plugins
-defer plug "zsh-users/zsh-syntax-highlighting"
-defer plug "Aloxaf/fzf-tab"
+defer plug 'zsh-users/zsh-syntax-highlighting'
+defer plug 'Aloxaf/fzf-tab'
 
 # Enable prompt substitution
 setopt PROMPT_SUBST
