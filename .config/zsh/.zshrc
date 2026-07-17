@@ -1,7 +1,7 @@
 # Load functions
-source "$ZDOTDIR/functions/git_status.zsh"
-source "$ZDOTDIR/functions/defer.zsh"
-source "$ZDOTDIR/functions/plug.zsh"
+for file in "$ZDOTDIR/functions/"*.zsh(N); do
+    source "$file"
+done
 
 # History settings
 HISTSIZE=120000
