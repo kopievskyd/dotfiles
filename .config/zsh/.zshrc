@@ -35,7 +35,6 @@ bindkey '^N' history-search-forward
 alias ls='ls -F'
 alias tree='tree -F --dirsfirst --noreport'
 alias wget='wget --no-hsts'
-alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
 # Completion setup
 fpath+=("$ZDOTDIR/completions")
