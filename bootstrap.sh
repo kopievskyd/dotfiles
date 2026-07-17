@@ -106,9 +106,6 @@ function setup_dotfiles() {
 		# Don't list every file in $HOME as untracked
 		dotfiles config status.showUntrackedFiles no
 
-		# Remember the work tree
-		dotfiles config core.worktree "$HOME"
-
 		# Check out everything except bootstrap.sh and README.md
 		dotfiles config core.sparseCheckout true
 		dotfiles sparse-checkout init --no-cone
