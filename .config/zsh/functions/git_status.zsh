@@ -18,6 +18,7 @@ function _get_git_status() {
     else
         return
     fi
+    git update-index --refresh >/dev/null 2>&1
     git diff-index --quiet HEAD 2>/dev/null || dirty="*"
     echo " $branch$dirty"
 }
