@@ -96,6 +96,7 @@ opt.confirm = true
 
 -- Set terminal title
 opt.title = true
+opt.titlestring = "%t %h%m%r"
 
 -- Sync with system clipboard
 opt.clipboard = "unnamedplus"
