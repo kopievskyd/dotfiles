@@ -4,6 +4,8 @@
 	name = Dmitry Kopievsky
 	email = kopievskyd@gmail.com
 	signingkey = 2F9338C1FAB7D45E
+[alias]
+    dotfiles = !git --git-dir=$HOME/.dotfiles --work-tree=$HOME
 [core]
 	compression = 9
 	preloadIndex = true
