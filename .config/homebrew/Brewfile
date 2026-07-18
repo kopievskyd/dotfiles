@@ -1,22 +1,28 @@
-# CLI tools
+# Tools
 brew "git"
-brew "wget"
-brew "tree"
 brew "fzf"
-brew "gnupg"
+brew "tree"
+brew "wget"
 brew "neovim"
 brew "ripgrep"
+brew "gnupg"
 brew "pinentry-mac"
 brew "tree-sitter-cli"
+
+# Runtimes
 brew "go"
 brew "node"
-brew "lua-language-server"
-brew "stylua"
-brew "biome"
-brew "shfmt"
-brew "beautysh"
-brew "jdtls"
 cask "temurin@25"
+
+# LSPs
+brew "lua-language-server"
+brew "jdtls"
+
+# Formatters
+brew "stylua"
+brew "beautysh"
+brew "shfmt"
+brew "biome"
 
 # Apps
 cask "syncthing-app"
