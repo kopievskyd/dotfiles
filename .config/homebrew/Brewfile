@@ -17,7 +17,6 @@ brew "shfmt"
 brew "beautysh"
 brew "jdtls"
 cask "temurin@25"
-cask "android-platform-tools"
 
 # Apps
 cask "syncthing-app"
