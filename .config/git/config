@@ -4,6 +4,7 @@
 	signingkey = 2F9338C1FAB7D45E
 [core]
 	preloadIndex = true
+	hooksPath = ~/.config/git/hooks
 [init]
 	defaultBranch = main
 [status]

@@ -1,0 +1,10 @@
+#!/bin/sh
+COMMIT_MSG_FILE=$1
+COMMIT_SOURCE=$2
+
+if [ -n "$COMMIT_SOURCE" ]; then
+	exit 0
+fi
+
+sed '2,4d' "$COMMIT_MSG_FILE" >"$COMMIT_MSG_FILE.tmp"
+mv "$COMMIT_MSG_FILE.tmp" "$COMMIT_MSG_FILE"
