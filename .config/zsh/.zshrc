@@ -36,8 +36,12 @@ alias ls='ls -F'
 alias tree='tree -F --dirsfirst --noreport'
 alias wget='wget --no-hsts'
 
+# Enable plugins
+defer plug 'zsh-users/zsh-syntax-highlighting'
+defer plug 'zsh-users/zsh-completions'
+defer plug 'Aloxaf/fzf-tab'
+
 # Completion setup
-fpath+=("$ZDOTDIR/completions")
 fpath+=("$HOMEBREW_PREFIX/share/zsh/site-functions")
 autoload -Uz compinit && defer compinit -i -d "$XDG_CACHE_HOME/.zcompdump"
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/.zcompcache"
@@ -45,10 +49,6 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:*' fzf-flags \
     --no-info --no-separator --pointer='' --marker='  ' --color=fg:7,bg+:8
-
-# Enable plugins
-defer plug 'zsh-users/zsh-syntax-highlighting'
-defer plug 'Aloxaf/fzf-tab'
 
 # Enable prompt substitution
 setopt PROMPT_SUBST
