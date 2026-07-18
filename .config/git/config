@@ -1,20 +1,37 @@
-[init]
-	defaultBranch = main
 [user]
 	name = Dmitry Kopievsky
 	email = kopievskyd@gmail.com
 	signingkey = 2F9338C1FAB7D45E
-[alias]
-    dotfiles = !git --git-dir=$HOME/.dotfiles --work-tree=$HOME
 [core]
-	compression = 9
 	preloadIndex = true
+[init]
+	defaultBranch = main
 [status]
+	branch = true
+	short = true
 	showStash = true
+	showUntrackedFiles = all
+[diff]
+	algorithm = histogram
+	context = 3
+	tool = nvim
+	mnemonicPrefix = true
+[difftool]
+	prompt = false
+[difftool "nvim"]
+	cmd = nvim -d "$LOCAL" "$REMOTE"
+[commit]
+	gpgsign = true
 [push]
 	autoSetupRemote = true
 	followTags = true
-[commit]
-	gpgsign = true
+[pull]
+	rebase = true
+[rebase]
+	autoStash = true
+[fetch]
+	prune = true
 [tag]
 	gpgSign = true
+[alias]
+	dotfiles = !git --git-dir=$HOME/.dotfiles --work-tree=$HOME
