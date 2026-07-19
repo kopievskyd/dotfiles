@@ -36,3 +36,11 @@
 	gpgSign = true
 [alias]
 	dotfiles = !git --git-dir=$HOME/.dotfiles --work-tree=$HOME
+[pager]
+	diff = diff-so-fancy | less --tabs=4 -RFX
+	show = diff-so-fancy | less --tabs=4 -RFX
+[diff-so-fancy]
+	rulerWidth = 65
+	shortHeaders = true
+	useUnicodeRuler = false
+	stripLeadingSymbols = false
