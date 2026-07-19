@@ -19,6 +19,7 @@ readonly DEFER_DEFAULT_OPTS='12dm'
 
 # Schedule task processing when shell becomes idle
 function _defer_schedule() {
+    local fd
     exec {fd}</dev/null
     zle -F "$fd" _defer_resume
 }
@@ -55,7 +56,7 @@ function _defer_execute_task() {
     [[ "$opts" == *1* ]] && exec {stdout_fd}>&1 1>/dev/null
     [[ "$opts" == *2* ]] && exec {stderr_fd}>&2 2>/dev/null
     {
-        "${(@Q)${(z)cmd}}"
+        () { "${(@Q)${(z)cmd}}" }
         _defer_run_hooks "$opts" "$original_dir"
         } always {
         (( stdout_fd >= 0 )) && exec 1>&"$stdout_fd" {stdout_fd}>&-
@@ -87,6 +88,7 @@ function _defer_run_hooks() {
 
 # Public function
 function defer() {
+    emulate -L zsh
     local opts="$DEFER_DEFAULT_OPTS"
     local cmd="${(@q)@}"
     (( $#_defer_tasks )) || _defer_schedule
