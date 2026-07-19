@@ -42,5 +42,6 @@
 [diff-so-fancy]
 	rulerWidth = 65
 	shortHeaders = true
+	markEmptyLines = false
 	useUnicodeRuler = false
 	stripLeadingSymbols = false
