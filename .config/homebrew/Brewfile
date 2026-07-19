@@ -8,6 +8,7 @@ brew "ripgrep"
 brew "gnupg"
 brew "pinentry-mac"
 brew "tree-sitter-cli"
+brew "diff-so-fancy"
 
 # Runtimes
 brew "go"
