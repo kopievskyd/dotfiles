@@ -15,7 +15,9 @@ builtin setopt no_aliases no_sh_glob brace_expand
 typeset -ga _defer_tasks=()
 
 # Default options: 1=stdout, 2=stderr, d=chpwd, m=precmd
-readonly DEFER_DEFAULT_OPTS='12dm'
+if (( ! ${+DEFER_DEFAULT_OPTS} )); then
+    readonly DEFER_DEFAULT_OPTS='12dm'
+fi
 
 # Schedule task processing when shell becomes idle
 function _defer_schedule() {
