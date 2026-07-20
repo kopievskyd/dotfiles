@@ -1,5 +1,7 @@
 # Path for plugins
-readonly _PLUGINS_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins"
+if (( ! ${+_PLUGINS_DIR} )); then
+    readonly _PLUGINS_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins"
+fi
 
 # Public function to load a plugin
 function plug() {
