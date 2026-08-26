@@ -10,9 +10,6 @@ readonly DOTFILES_URL='https://github.com/kopievskyd/dotfiles'
 # Path to the Brewfile with packages to install
 readonly BREWFILE="$HOME/.config/homebrew/Brewfile"
 
-# Languages for tree-sitter parser installation
-readonly TS_LANGUAGES=(java)
-
 readonly YELLOW='\033[33m'
 readonly GREEN='\033[32m'
 readonly RED='\033[31m'
@@ -140,9 +137,6 @@ function install_packages() {
 		return 1
 	fi
 
-	# Use the custom GOPATH for Go packages installed via Brewfile
-	export GOPATH="$HOME/.local/share/go"
-
 	info 'installing packages'
 	brew bundle --file="$BREWFILE" &>/dev/null || {
 		warn 'some packages may not have been installed'
@@ -150,76 +144,6 @@ function install_packages() {
 	}
 
 	success 'packages installed'
-}
-
-function install_parser() {
-	local lang="$1"
-	local parser_dir="$2"
-	local queries_dir="$3"
-	local repo="tree-sitter-$lang"
-	local ts_url="https://github.com/tree-sitter/$repo"
-	local src_dir="$HOME/.local/share/tree-sitter/$repo"
-
-	if [[ ! -d "$src_dir" ]]; then
-		git clone --depth=1 --quiet "$ts_url" "$src_dir" || {
-			warn "failed to clone $repo"
-			return 1
-		}
-	else
-		git -C "$src_dir" pull --ff-only --quiet || {
-			warn "failed to update $repo"
-		}
-	fi
-
-	# Building parser
-	tree-sitter build -o "$parser_dir/$lang.so" "$src_dir" || {
-		warn "failed to build $lang parser"
-		return 1
-	}
-
-	# Installing queries
-	if [[ -d "$src_dir/queries" ]]; then
-		rm -rf "${queries_dir:?}/${lang:?}"
-		cp -R "$src_dir/queries" "$queries_dir/$lang" || {
-			warn "failed to install $lang queries"
-			return 1
-		}
-	fi
-
-	info "$repo parser installed"
-}
-
-function install_ts_parsers() {
-	local parser_dir="$HOME/.local/share/nvim/site/parser"
-	local queries_dir="$HOME/.local/share/nvim/site/queries"
-	local total="${#TS_LANGUAGES[@]}"
-	local installed="$total"
-
-	command -v tree-sitter &>/dev/null || {
-		warn 'tree-sitter-cli not found'
-		warn 'skipping tree-sitter parser installation'
-		return 1
-	}
-
-	mkdir -p "$parser_dir" "$queries_dir" || {
-		warn 'failed to create parser directories'
-		warn 'skipping tree-sitter parser installation'
-		return 1
-	}
-
-	local lang
-	for lang in "${TS_LANGUAGES[@]}"; do
-		install_parser "$lang" "$parser_dir" "$queries_dir" || {
-			warn "skipping $lang parser installation"
-			((--installed))
-		}
-	done
-
-	if ((installed == total)); then
-		success 'tree-sitter parsers installed'
-	else
-		warn "installed $installed of $total tree-sitter parsers"
-	fi
 }
 
 # Increments the caller's 'failed' counter via Bash dynamic scoping,
@@ -238,18 +162,6 @@ function apply_settings() {
 	apply sudo scutil --set ComputerName "$COMPUTERNAME"
 	apply sudo scutil --set HostName "$HOSTNAME"
 	apply sudo scutil --set LocalHostName "$HOSTNAME"
-
-	# Setting TextEdit
-	apply defaults write com.apple.TextEdit RichText -bool false
-	apply defaults write com.apple.TextEdit NSFixedPitchFontSize -int 14
-	apply defaults write com.apple.TextEdit CheckSpellingWhileTyping -bool false
-	apply defaults write com.apple.TextEdit CorrectSpellingAutomatically -bool false
-	apply defaults write com.apple.TextEdit ShowRuler -bool false
-	apply defaults write com.apple.TextEdit SmartSubstitutionsEnabledInRichTextOnly -bool false
-	apply defaults write com.apple.TextEdit SmartCopyPaste -bool false
-	apply defaults write com.apple.TextEdit SmartQuotes -bool false
-	apply defaults write com.apple.TextEdit SmartDashes -bool false
-	apply defaults write com.apple.TextEdit TextReplacement -bool false
 
 	# Refresh Activity Monitor every 2 seconds
 	apply defaults write com.apple.ActivityMonitor "UpdatePeriod" -int "2"
@@ -297,7 +209,6 @@ function main() {
 	setup_dotfiles || exit 1
 	ensure_directories
 	install_packages
-	install_ts_parsers
 	apply_settings
 	cleanup
 
