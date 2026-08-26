@@ -7,17 +7,13 @@ brew "neovim"
 brew "ripgrep"
 brew "gnupg"
 brew "pinentry-mac"
-brew "tree-sitter-cli"
 brew "diff-so-fancy"
 
 # Runtimes
-brew "go"
 brew "node"
-cask "temurin@25"
 
 # LSPs
 brew "lua-language-server"
-brew "jdtls"
 
 # Formatters
 brew "stylua"
