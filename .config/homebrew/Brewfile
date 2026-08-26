@@ -41,13 +41,7 @@ cask "affinity"
 
 # Fonts
 cask "font-source-sans-3"
-cask "font-ibm-plex-mono"
-cask "font-cascadia-mono"
 cask "font-iosevka"
-cask "font-hermit"
-
-# Go packages
-go "golang.org/x/tools/gopls"
 
 # Mac App Store apps
 mas "WireGuard", id: 1451685025
