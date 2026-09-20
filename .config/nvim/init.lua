@@ -26,14 +26,17 @@ local opt = vim.opt
 -- Show line numbers
 opt.number = true
 
--- Don't show sign column
-opt.signcolumn = "no"
+-- Always show sign column
+opt.signcolumn = "yes:1"
 
 -- Indentation
 opt.tabstop = 4
 opt.shiftwidth = 4
 opt.shiftround = true
 opt.smartindent = true
+
+-- Completion
+opt.wildignore:append({ "*/.git/*" })
 
 -- Search
 opt.hlsearch = false
@@ -62,12 +65,6 @@ opt.iskeyword:append("-")
 -- Marker-based folding
 opt.foldmethod = "marker"
 
--- Completion
-opt.completeopt = "menu,menuone,noinsert,fuzzy"
-opt.wildmode = "longest:full,full"
-opt.pumheight = 10
-opt.wildignore:append({ "*/.git/*" })
-
 -- Appearance
 opt.termguicolors = true
 opt.winborder = "single"
@@ -75,11 +72,10 @@ opt.fillchars = "eob: "
 opt.shortmess:append("WIcC")
 
 -- Tabline
-opt.showtabline = 2
+opt.showtabline = 1
 
 -- Statusline
 opt.laststatus = 3
-opt.rulerformat = "%P"
 
 -- Command-line
 opt.cmdheight = 0
@@ -139,7 +135,6 @@ map("n", "<leader>e", toggle_netrw, "Toggle file explorer")
 
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
-
 local user = augroup("UserConfig", { clear = true })
 
 autocmd("TextYankPost", {
@@ -157,15 +152,7 @@ autocmd("FileType", {
 	end,
 })
 
-autocmd("FileType", {
-	group = user,
-	pattern = "java",
-	callback = function(args)
-		vim.opt_local.expandtab = true
-		pcall(vim.treesitter.start, args.buf)
-	end,
-})
-
+-- Get absolute and relative paths for the file under the cursor
 local function get_cfile_path()
 	local file = vim.fn.expand("<cfile>")
 	local path = vim.fs.joinpath(vim.b.netrw_curdir, file)
@@ -176,7 +163,7 @@ local function get_cfile_path()
 	return path, relpath
 end
 
--- Override netrw's file opening behavior
+-- Fix absolute file paths when opening files from netrw
 autocmd("FileType", {
 	group = user,
 	pattern = "netrw",
@@ -199,39 +186,7 @@ autocmd("FileType", {
 	end,
 })
 
--- Override netrw's split-open behavior
-autocmd("FileType", {
-	group = user,
-	pattern = "netrw",
-	callback = function(ev)
-		vim.keymap.set("n", "o", function()
-			local _, relpath = get_cfile_path()
-			toggle_netrw()
-			vim.cmd.split(vim.fn.fnameescape(relpath))
-		end, {
-			buffer = ev.buf,
-			desc = "Netrw: Open selected file in split",
-		})
-	end,
-})
-
--- Override netrw's vsplit-open behavior
-autocmd("FileType", {
-	group = user,
-	pattern = "netrw",
-	callback = function(ev)
-		vim.keymap.set("n", "v", function()
-			local _, relpath = get_cfile_path()
-			toggle_netrw()
-			vim.cmd.vsplit(vim.fn.fnameescape(relpath))
-		end, {
-			buffer = ev.buf,
-			desc = "Netrw: Open selected file in vertical split",
-		})
-	end,
-})
-
--- Override netrw's tab-open behavior
+-- Work around netrw not creating a proper tabpage when opening files with `t`
 autocmd("FileType", {
 	group = user,
 	pattern = "netrw",
@@ -302,10 +257,47 @@ vim.cmd.packadd("nvim.difftool")
 -- Install third-party plugins
 vim.pack.add({
 	"https://github.com/webhooked/kanso.nvim",
-	"https://github.com/neovim/nvim-lspconfig",
+	"https://github.com/lewis6991/gitsigns.nvim",
 	"https://github.com/kylechui/nvim-surround",
 	"https://github.com/nvim-mini/mini.pairs",
 	"https://github.com/nvim-mini/mini.pick",
+	"https://github.com/nvim-mini/mini.statusline",
+	"https://github.com/neovim/nvim-lspconfig",
+	"https://github.com/saghen/blink.indent",
+	"https://github.com/saghen/blink.lib",
+	"https://github.com/saghen/blink.cmp",
+	"https://github.com/rafamadriz/friendly-snippets",
+})
+
+require("mini.statusline").setup({
+	content = {
+		active = function()
+			local mode, mode_hl = MiniStatusline.section_mode({})
+			local filename = "%f%h%m%r"
+			local git = vim.b.gitsigns_head
+			local diff = vim.b.gitsigns_status
+			local diagnostic = vim.diagnostic.status()
+			local location = "%P"
+
+			return MiniStatusline.combine_groups({
+				{ hl = mode_hl, strings = { mode } },
+				{ hl = "MiniStatuslineFilename", strings = { filename } },
+				{ hl = "MiniStatuslineDevinfo", strings = { git, diff } },
+				"%=",
+				{ hl = "MiniStatuslineDevinfo", strings = { diagnostic } },
+				{ hl = "MiniStatuslineFileinfo", strings = { location } },
+			})
+		end,
+	},
+	use_icons = false,
+})
+
+require("blink.indent").setup({
+	static = {
+		char = "▏",
+		highlights = { "FloatBorder" },
+	},
+	scope = { enabled = false },
 })
 
 -- Lazy setup helper
@@ -338,6 +330,18 @@ lazy_load("mini.pick", {
 		end,
 	},
 })
+lazy_load("blink.cmp", {
+	completion = {
+		menu = {
+			border = "none",
+			draw = {
+				columns = { { "label" }, { "kind" } },
+			},
+		},
+	},
+	keymap = { preset = "enter" },
+	fuzzy = { implementation = "lua" },
+})
 
 -- }}}
 
@@ -367,9 +371,7 @@ vim.cmd.colorscheme("kanso")
 vim.diagnostic.config({
 	severity_sort = true,
 	update_in_insert = true,
-	virtual_text = {
-		prefix = "●",
-	},
+	virtual_text = { prefix = "●" },
 })
 
 -- }}}
@@ -382,28 +384,13 @@ autocmd("User", {
 	once = true,
 	pattern = "Lazy",
 	callback = function()
-		-- Generate completion trigger characters
-		local chars = {}
-		for i = 32, 126 do
-			local c = string.char(i)
-			if c:match("[%w_.:@$]") then
-				table.insert(chars, c)
-			end
-		end
-
 		vim.lsp.config("*", {
 			on_init = function(client, _)
 				client.server_capabilities.semanticTokensProvider = nil
-				client.server_capabilities.completionProvider.triggerCharacters = chars
-			end,
-			on_attach = function(client, bufnr)
-				vim.lsp.completion.enable(true, client.id, bufnr, {
-					autotrigger = true,
-				})
 			end,
 		})
 
-		vim.lsp.enable({ "lua_ls", "gopls", "jdtls" })
+		vim.lsp.enable({ "lua_ls" })
 	end,
 })
 
