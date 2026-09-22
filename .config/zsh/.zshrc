@@ -77,9 +77,5 @@ zstyle ':fzf-tab:*' fzf-flags \
 # Enable prompt substitution
 setopt PROMPT_SUBST
 
-# ANSI escape sequences for italic text
-italic=$'\e[3m'
-no_italic=$'\e[23m'
-
 # Prompt
-PS1='%F{8}%m %F{magenta}%1~%F{white}${italic}${GIT_STATUS}${no_italic} %(?..%F{red})➜%f '
+PS1='%F{blue}%~%F{white}${GIT_STATUS} %(?..%F{red})▸%f '
