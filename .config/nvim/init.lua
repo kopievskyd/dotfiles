@@ -390,7 +390,7 @@ autocmd("User", {
 			end,
 		})
 
-		vim.lsp.enable({ "lua_ls" })
+		vim.lsp.enable({ "lua_ls", "yamlls" })
 	end,
 })
 
