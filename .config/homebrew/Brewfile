@@ -14,7 +14,6 @@ brew "node"
 
 # LSPs
 brew "lua-language-server"
-brew "yaml-language-server"
 
 # Formatters
 brew "stylua"
@@ -32,7 +31,6 @@ cask "vlc"
 cask "pika"
 cask "keepassxc"
 cask "telegram"
-cask "helium-browser"
 cask "firefox"
 cask "ghostty"
 cask "obsidian"
@@ -40,8 +38,9 @@ cask "figma"
 cask "affinity"
 
 # Fonts
+cask "font-sf-mono"
 cask "font-source-sans-3"
-cask "font-iosevka"
+cask "font-source-code-pro"
 
 # Mac App Store apps
 mas "WireGuard", id: 1451685025
