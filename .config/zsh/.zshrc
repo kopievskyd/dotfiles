@@ -78,4 +78,4 @@ zstyle ':fzf-tab:*' fzf-flags \
 setopt PROMPT_SUBST
 
 # Prompt
-PS1='%F{blue}%~%F{white}${GIT_STATUS} %(?..%F{red})▸%f '
+PS1='%(?..%F{red})▸ %F{blue}%1~%F{white}${GIT_STATUS} %(!.#.$)%f '
