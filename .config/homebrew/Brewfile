@@ -23,12 +23,10 @@ brew "biome"
 
 # Apps
 cask "syncthing-app"
-cask "domzilla-caffeine"
 cask "loop"
 cask "transmission"
 cask "pearcleaner"
 cask "vlc"
-cask "pika"
 cask "keepassxc"
 cask "telegram"
 cask "firefox"
