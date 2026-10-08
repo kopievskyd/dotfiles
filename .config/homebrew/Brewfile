@@ -34,6 +34,7 @@ cask "ghostty"
 cask "obsidian"
 cask "figma"
 cask "affinity"
+cask "jimeh/emacs-builds/emacs-app"
 
 # Fonts
 cask "font-sf-mono"
