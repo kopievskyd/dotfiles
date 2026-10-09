@@ -30,8 +30,8 @@ opt.number = true
 opt.signcolumn = "yes:1"
 
 -- Indentation
-opt.tabstop = 4
-opt.shiftwidth = 4
+opt.tabstop = 2
+opt.shiftwidth = 2
 opt.shiftround = true
 opt.smartindent = true
 
@@ -263,7 +263,6 @@ vim.pack.add({
 	"https://github.com/nvim-mini/mini.pick",
 	"https://github.com/nvim-mini/mini.statusline",
 	"https://github.com/neovim/nvim-lspconfig",
-	"https://github.com/saghen/blink.indent",
 	"https://github.com/saghen/blink.lib",
 	"https://github.com/saghen/blink.cmp",
 	"https://github.com/rafamadriz/friendly-snippets",
@@ -290,14 +289,6 @@ require("mini.statusline").setup({
 		end,
 	},
 	use_icons = false,
-})
-
-require("blink.indent").setup({
-	static = {
-		char = "▏",
-		highlights = { "FloatBorder" },
-	},
-	scope = { enabled = false },
 })
 
 -- Lazy setup helper
