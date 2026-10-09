@@ -15,6 +15,7 @@
 (setq make-backup-files nil) ; no backup files
 (setq auto-save-default nil) ; no auto-save files
 (setq auto-save-list-file-prefix nil) ; no auto-save session lists
+(defalias 'yes-or-no-p 'y-or-n-p) ; shorten confirmation prompts
 
 ;;; Completion
 (global-completion-preview-mode 1) ; show completion preview
@@ -61,10 +62,9 @@
 ;; Packages to keep installed
 (setq package-selected-packages
       '(gruvbox-theme
+        vertico
         undo-fu-session
         reverse-im
-        olivetti
-        vertico
         evil
         evil-org))
 
@@ -73,6 +73,11 @@
   :config
   (load-theme 'gruvbox-dark-hard t)
   (set-face-background 'internal-border nil))
+
+;; Vertical completion
+(use-package vertico
+  :init
+  (vertico-mode))
 
 ;; Persistent undo history
 (use-package undo-fu-session
@@ -95,18 +100,6 @@
   (let ((inhibit-message t)
         (message-log-max nil))
     (reverse-im-mode 1)))
-
-;; Centered text
-(use-package olivetti
-  :hook
-  (text-mode . olivetti-mode)
-  :custom
-  (olivetti-body-width 100))
-
-;; Vertical completion
-(use-package vertico
-  :init
-  (vertico-mode))
 
 ;; Vim emulation
 (use-package evil
