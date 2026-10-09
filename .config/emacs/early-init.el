@@ -10,6 +10,7 @@
 (scroll-bar-mode -1) ; hide scroll bar
 (context-menu-mode 1) ; enable context menu
 (pixel-scroll-mode 1) ; enable pixel-based scrolling
+(global-display-line-numbers-mode 1) ; display line numbers
 (add-to-list 'default-frame-alist '(font . "SF Mono-13")) ; font family and size
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)) ; enable transparent title bar
 (set-face-attribute 'fringe nil :background 'unspecified) ; blend fringe with background

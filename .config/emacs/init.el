@@ -28,6 +28,7 @@
 (electric-pair-mode 1) ; auto-close brackets
 (delete-selection-mode 1) ; typing replaces selection
 (global-auto-revert-mode 1) ; auto-revert buffers when files change
+(global-hl-line-mode 1) ; highlight the current line
 
 ;; Insert blank lines above
 (defun blank-line-above (count)
@@ -72,7 +73,9 @@
 (use-package gruvbox-theme
   :config
   (load-theme 'gruvbox-dark-hard t)
-  (set-face-background 'internal-border nil))
+  (set-face-background 'internal-border nil)
+  (set-face-background 'line-number nil)
+  (set-face-background 'line-number-current-line nil))
 
 ;; Vertical completion
 (use-package vertico
