@@ -33,6 +33,7 @@ cask "firefox"
 cask "ghostty"
 cask "figma"
 cask "affinity"
+cask "obsidian"
 
 # Fonts
 cask "font-sf-mono"
