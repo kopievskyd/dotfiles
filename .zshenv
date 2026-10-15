@@ -12,7 +12,6 @@ export HOMEBREW_BUNDLE_FILE="$XDG_CONFIG_HOME/homebrew/Brewfile"
 
 # Define paths for common programs
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-export GOPATH="$XDG_DATA_HOME/go"
+export LESSHISTFILE="$XDG_STATE_HOME/.lesshst"
 export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
-export LESSHISTFILE="$XDG_STATE_HOME/.lesshst"
