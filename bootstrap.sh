@@ -106,7 +106,7 @@ function setup_dotfiles() {
 		# Check out everything except bootstrap.sh and README.md
 		dotfiles config core.sparseCheckout true
 		dotfiles sparse-checkout init --no-cone
-		dotfiles sparse-checkout set '/*' '!bootstrap.sh' '!README.md'
+		dotfiles sparse-checkout set '/*' '!bootstrap.sh' '!README.md' '!LICENSE'
 	else
 		info 'updating dotfiles repository'
 		dotfiles pull --rebase --autostash --quiet || {
