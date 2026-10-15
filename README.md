@@ -11,3 +11,7 @@ This repository contains my personal configuration files for macOS. It uses Home
 ```sh
 curl -fsSL https://raw.githubusercontent.com/kopievskyd/dotfiles/main/bootstrap.sh | bash
 ```
+
+## License
+
+[Creative Commons Zero v1.0 Universal](LICENSE)
